@@ -8,6 +8,7 @@ import os
 import json
 import re
 import random
+import time
 from datetime import datetime, timedelta
 from collections import defaultdict
 import logging
@@ -198,20 +199,37 @@ def scrape_reddit(subreddits, valid_tickers, lookback_days=1):
 def fetch_stock_data(tickers):
     """
     Fetch price, fundamentals, and technical data for a list of tickers.
-    Returns dict of {ticker: {price, changes, fundamentals, technicals}}
-    
-    If yfinance fails for a ticker, use mock data as fallback.
+    Includes retry logic and delays to handle rate limiting from Yahoo Finance.
     """
     log.info(f"Fetching stock data for {len(tickers)} tickers from yfinance...")
     results = {}
     success_count = 0
     
-    for ticker in tickers:
+    for idx, ticker in enumerate(tickers):
         try:
+            # Add delay between requests to avoid rate limiting
+            if idx > 0:
+                delay = 2 + random.uniform(0.5, 1.5)  # 2-3.5 seconds between requests
+                log.info(f"  ⏳ Waiting {delay:.1f}s before next request...")
+                time.sleep(delay)
+            
             log.info(f"  → Fetching {ticker}...")
-            stock = yf.Ticker(ticker)
-            info = stock.info
-            hist = stock.history(period='6mo')
+            
+            # Retry logic: try up to 3 times with exponential backoff
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    stock = yf.Ticker(ticker)
+                    info = stock.info
+                    hist = stock.history(period='6mo')
+                    break  # Success, exit retry loop
+                except Exception as e:
+                    if attempt < max_retries - 1:
+                        wait_time = 5 * (2 ** attempt)  # 5s, 10s, 20s
+                        log.warning(f"    Attempt {attempt + 1} failed, retrying in {wait_time}s...")
+                        time.sleep(wait_time)
+                    else:
+                        raise
             
             if hist.empty:
                 log.warning(f"  ⚠️  No historical data for {ticker}, using fallback")
