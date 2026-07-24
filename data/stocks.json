@@ -1,6 +1,11 @@
 {
   "stocks": {},
   "sectors": {},
-  "updated_at": "2026-01-01T00:00:00Z",
-  "subreddits": ["stocks", "investing", "wallstreetbets", "ValueInvesting"]
+  "updated_at": "2026-07-24T18:02:09.126544Z",
+  "subreddits": [
+    "stocks",
+    "investing",
+    "wallstreetbets",
+    "ValueInvesting"
+  ]
 }
