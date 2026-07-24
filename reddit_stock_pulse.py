@@ -202,16 +202,19 @@ def fetch_stock_data(tickers):
     
     If yfinance fails for a ticker, use mock data as fallback.
     """
+    log.info(f"Fetching stock data for {len(tickers)} tickers from yfinance...")
     results = {}
+    success_count = 0
     
     for ticker in tickers:
         try:
+            log.info(f"  → Fetching {ticker}...")
             stock = yf.Ticker(ticker)
             info = stock.info
             hist = stock.history(period='6mo')
             
             if hist.empty:
-                log.warning(f"No historical data for {ticker}, using fallback")
+                log.warning(f"  ⚠️  No historical data for {ticker}, using fallback")
                 results[ticker] = generate_mock_stock_data(ticker)
                 continue
             
@@ -260,12 +263,14 @@ def fetch_stock_data(tickers):
                 },
             }
             
-            log.info(f"✓ Fetched data for {ticker}: ${current_price}")
+            log.info(f"  ✓ {ticker}: ${current_price} ({pct(day_ago, current_price):+.1f}%)")
+            success_count += 1
         
         except Exception as e:
-            log.warning(f"Error fetching {ticker} from yfinance, using mock: {e}")
+            log.warning(f"  ⚠️  {ticker} failed: {str(e)[:100]} — using mock")
             results[ticker] = generate_mock_stock_data(ticker)
     
+    log.info(f"Stock data fetched: {success_count} real, {len(results) - success_count} mock")
     return results
 
 
