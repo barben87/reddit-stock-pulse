@@ -14,8 +14,8 @@ from collections import defaultdict
 import logging
 
 import praw
-import yfinance as yf
 import pandas as pd
+import requests  # For Finnhub API calls
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 log = logging.getLogger(__name__)
@@ -26,10 +26,12 @@ log = logging.getLogger(__name__)
 REDDIT_CLIENT_ID = os.environ.get('REDDIT_CLIENT_ID')
 REDDIT_CLIENT_SECRET = os.environ.get('REDDIT_CLIENT_SECRET')
 REDDIT_USER_AGENT = os.environ.get('REDDIT_USER_AGENT', 'StockPulse/1.0')
+FINNHUB_API_KEY = os.environ.get('FINNHUB_API_KEY')
 
 SUBREDDITS = ['stocks', 'investing', 'wallstreetbets', 'ValueInvesting']
 DATA_FILE = 'data/stocks.json'
 TICKER_CACHE_FILE = 'data/ticker_cache.json'
+FINNHUB_BASE_URL = "https://finnhub.io/api/v1"
 
 # ============================================================================
 # UTILITY: Load/Cache Valid Ticker List
