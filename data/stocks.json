@@ -1,8 +1,8 @@
 {
   "stocks": {
-    "MSCI": {
-      "price": 550.79,
-      "dayChange": -0.31,
+    "YPF": {
+      "price": 51.4,
+      "dayChange": -1.0,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -14,19 +14,21 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 40042.432027038354,
+        "marketCap": 30351812.47,
         "pe": "N/A",
-        "sector": "Financial Services",
-        "industry": "Financial Services"
+        "sector": "Energy",
+        "industry": "Energy"
       },
       "reddit": {
-        "mentions": 2,
+        "mentions": 1,
         "bullish": 0,
-        "bearish": 1,
+        "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
-      "reddit_mentions": 2
+      "reddit_mentions": 1
     },
     "GOLD": {
       "price": 39.35,
@@ -52,13 +54,15 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
       "reddit_mentions": 1
     },
-    "YPF": {
-      "price": 51.4,
-      "dayChange": -1.0,
+    "MSCI": {
+      "price": 550.79,
+      "dayChange": -0.31,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -70,23 +74,25 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 30351812.47,
+        "marketCap": 40042.432027038354,
         "pe": "N/A",
-        "sector": "Energy",
-        "industry": "Energy"
+        "sector": "Financial Services",
+        "industry": "Financial Services"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
+        "mentions": 3,
+        "bullish": 1,
+        "bearish": 1,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 3
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 3
     },
-    "LMT": {
-      "price": 582.6,
-      "dayChange": 2.46,
+    "MSFT": {
+      "price": 381.7,
+      "dayChange": 0.03,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -98,19 +104,51 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 134326.3677982008,
+        "marketCap": 2835433.375710069,
         "pe": "N/A",
-        "sector": "Aerospace & Defense",
-        "industry": "Aerospace & Defense"
+        "sector": "Technology",
+        "industry": "Technology"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
+        "mentions": 7,
+        "bullish": 2,
         "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
+        "neutral": 5,
+        "subreddits": {
+          "stocks": 7
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 7
+    },
+    "NVDA": {
+      "price": 206.84,
+      "dayChange": -0.92,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 5005527.868287625,
+        "pe": "N/A",
+        "sector": "Semiconductors",
+        "industry": "Semiconductors"
+      },
+      "reddit": {
+        "mentions": 5,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 4,
+        "subreddits": {
+          "stocks": 5
+        }
+      },
+      "reddit_mentions": 5
     },
     "AMZN": {
       "price": 232.11,
@@ -132,13 +170,15 @@
         "industry": "Retail"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
+        "mentions": 5,
+        "bullish": 3,
         "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 5
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 5
     },
     "MP": {
       "price": 41.3,
@@ -164,13 +204,15 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
       "reddit_mentions": 1
     },
-    "NVDA": {
-      "price": 206.84,
-      "dayChange": -0.92,
+    "WMT": {
+      "price": 109.47,
+      "dayChange": 0.99,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -182,23 +224,85 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 5005527.868287625,
+        "marketCap": 963166.32,
+        "pe": "N/A",
+        "sector": "Retail",
+        "industry": "Retail"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "DLR": {
+      "price": 199.08,
+      "dayChange": 11.01,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 71204.09425749416,
+        "pe": "N/A",
+        "sector": "Real Estate",
+        "industry": "Real Estate"
+      },
+      "reddit": {
+        "mentions": 1,
+        "bullish": 0,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 1
+        }
+      },
+      "reddit_mentions": 1
+    },
+    "INTC": {
+      "price": 92.32,
+      "dayChange": -7.89,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 464000.33554048726,
         "pe": "N/A",
         "sector": "Semiconductors",
         "industry": "Semiconductors"
       },
       "reddit": {
-        "mentions": 3,
+        "mentions": 2,
         "bullish": 1,
         "bearish": 0,
-        "neutral": 2,
-        "subreddits": {}
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
       },
-      "reddit_mentions": 3
+      "reddit_mentions": 2
     },
-    "MSFT": {
-      "price": 381.7,
-      "dayChange": 0.03,
+    "LMT": {
+      "price": 582.6,
+      "dayChange": 2.46,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -210,19 +314,21 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 2835433.375710069,
+        "marketCap": 134326.3677982008,
         "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
+        "sector": "Aerospace & Defense",
+        "industry": "Aerospace & Defense"
       },
       "reddit": {
-        "mentions": 2,
+        "mentions": 1,
         "bullish": 0,
         "bearish": 0,
-        "neutral": 2,
-        "subreddits": {}
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 1
+        }
       },
-      "reddit_mentions": 2
+      "reddit_mentions": 1
     },
     "RIVN": {
       "price": 15.84,
@@ -248,63 +354,9 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "LDOS": {
-      "price": 112.14,
-      "dayChange": 1.64,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 14105.58273376543,
-        "pe": "N/A",
-        "sector": "Professional Services",
-        "industry": "Professional Services"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "WMT": {
-      "price": 109.47,
-      "dayChange": 0.99,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 963166.32,
-        "pe": "N/A",
-        "sector": "Retail",
-        "industry": "Retail"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
       "reddit_mentions": 1
     },
@@ -332,13 +384,15 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
       "reddit_mentions": 1
     },
-    "COST": {
-      "price": 935.03,
-      "dayChange": 0.97,
+    "LDOS": {
+      "price": 112.14,
+      "dayChange": 1.64,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -350,157 +404,19 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 414666.000720095,
+        "marketCap": 14105.58273376543,
         "pe": "N/A",
-        "sector": "Retail",
-        "industry": "Retail"
+        "sector": "Professional Services",
+        "industry": "Professional Services"
       },
       "reddit": {
         "mentions": 1,
         "bullish": 0,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "DLR": {
-      "price": 199.08,
-      "dayChange": 11.01,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 71204.09425749416,
-        "pe": "N/A",
-        "sector": "Real Estate",
-        "industry": "Real Estate"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "UBER": {
-      "price": 65.94,
-      "dayChange": -4.31,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 134227.40512862257,
-        "pe": "N/A",
-        "sector": "Road & Rail",
-        "industry": "Road & Rail"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "INTC": {
-      "price": 92.32,
-      "dayChange": -7.89,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 464000.33554048726,
-        "pe": "N/A",
-        "sector": "Semiconductors",
-        "industry": "Semiconductors"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "NFLX": {
-      "price": 70.09,
-      "dayChange": 1.74,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 291850.54790741735,
-        "pe": "N/A",
-        "sector": "Media",
-        "industry": "Media"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "MCO": {
-      "price": 471.5,
-      "dayChange": -0.16,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 82371.04685793135,
-        "pe": "N/A",
-        "sector": "Financial Services",
-        "industry": "Financial Services"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 1
+        }
       },
       "reddit_mentions": 1
     },
@@ -528,37 +444,11 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 3,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 3
+        }
       },
       "reddit_mentions": 3
-    },
-    "ASML": {
-      "price": 1757.09,
-      "dayChange": -2.55,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 603230.381055,
-        "pe": "N/A",
-        "sector": "Semiconductors",
-        "industry": "Semiconductors"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
     },
     "INTU": {
       "price": 296.33,
@@ -580,155 +470,15 @@
         "industry": "Technology"
       },
       "reddit": {
-        "mentions": 3,
-        "bullish": 2,
+        "mentions": 6,
+        "bullish": 4,
         "bearish": 0,
         "neutral": 1,
         "subreddits": {
-          "stocks": 1
+          "stocks": 6
         }
       },
-      "reddit_mentions": 3
-    },
-    "FICO": {
-      "price": 1237.37,
-      "dayChange": 2.58,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 28695.730612309286,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "SPGI": {
-      "price": 426.4,
-      "dayChange": 1.52,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 126214.4,
-        "pe": "N/A",
-        "sector": "Financial Services",
-        "industry": "Financial Services"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "UMC": {
-      "price": 19.48,
-      "dayChange": -6.66,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 1741912.471191,
-        "pe": "N/A",
-        "sector": "Semiconductors",
-        "industry": "Semiconductors"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 1,
-        "neutral": 0,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "HBM": {
-      "price": 22.35,
-      "dayChange": -1.24,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 14136.335525,
-        "pe": "N/A",
-        "sector": "Metals & Mining",
-        "industry": "Metals & Mining"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 1,
-        "neutral": 0,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "TSM": {
-      "price": 403.41,
-      "dayChange": -2.93,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 62367347.783203,
-        "pe": "N/A",
-        "sector": "Semiconductors",
-        "industry": "Semiconductors"
-      },
-      "reddit": {
-        "mentions": 2,
-        "bullish": 0,
-        "bearish": 1,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 2
+      "reddit_mentions": 6
     },
     "MU": {
       "price": 920.95,
@@ -750,15 +500,45 @@
         "industry": "Semiconductors"
       },
       "reddit": {
-        "mentions": 5,
-        "bullish": 2,
+        "mentions": 9,
+        "bullish": 3,
         "bearish": 2,
-        "neutral": 1,
+        "neutral": 3,
         "subreddits": {
-          "stocks": 1
+          "stocks": 9
         }
       },
-      "reddit_mentions": 5
+      "reddit_mentions": 9
+    },
+    "HBM": {
+      "price": 22.35,
+      "dayChange": -1.24,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 14136.335525,
+        "pe": "N/A",
+        "sector": "Metals & Mining",
+        "industry": "Metals & Mining"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 0,
+        "bearish": 1,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
     },
     "AMD": {
       "price": 521.95,
@@ -780,17 +560,19 @@
         "industry": "Semiconductors"
       },
       "reddit": {
-        "mentions": 3,
+        "mentions": 4,
         "bullish": 1,
         "bearish": 1,
-        "neutral": 1,
-        "subreddits": {}
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 4
+        }
       },
-      "reddit_mentions": 3
+      "reddit_mentions": 4
     },
-    "TME": {
-      "price": 8.86,
-      "dayChange": 1.14,
+    "TSM": {
+      "price": 403.41,
+      "dayChange": -2.93,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -802,75 +584,21 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 12795.147410595002,
+        "marketCap": 62367347.783203,
         "pe": "N/A",
-        "sector": "Media",
-        "industry": "Media"
+        "sector": "Semiconductors",
+        "industry": "Semiconductors"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
+        "mentions": 4,
+        "bullish": 1,
+        "bearish": 1,
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 4
+        }
       },
-      "reddit_mentions": 1
-    },
-    "CROX": {
-      "price": 134.72,
-      "dayChange": 1.7,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 6694.189396296217,
-        "pe": "N/A",
-        "sector": "Textiles, Apparel & Luxury Goods",
-        "industry": "Textiles, Apparel & Luxury Goods"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "MELI": {
-      "price": 1801.44,
-      "dayChange": 0.15,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 91327.92852509113,
-        "pe": "N/A",
-        "sector": "Retail",
-        "industry": "Retail"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
+      "reddit_mentions": 4
     },
     "PBR": {
       "price": 18.77,
@@ -892,97 +620,15 @@
         "industry": "Energy"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
+        "mentions": 2,
+        "bullish": 1,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 2
+        }
       },
-      "reddit_mentions": 1
-    },
-    "ADBE": {
-      "price": 225.11,
-      "dayChange": 6.1,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 89481.22422760015,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "JD": {
-      "price": 30.19,
-      "dayChange": 0.33,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 290191.175985,
-        "pe": "N/A",
-        "sector": "Retail",
-        "industry": "Retail"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "ACGL": {
-      "price": 103.36,
-      "dayChange": 3.26,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 36112.907203574025,
-        "pe": "N/A",
-        "sector": "Insurance",
-        "industry": "Insurance"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
+      "reddit_mentions": 2
     },
     "QFIN": {
       "price": 13.19,
@@ -1004,17 +650,19 @@
         "industry": "Financial Services"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
+        "mentions": 2,
+        "bullish": 1,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 2
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 2
     },
-    "SOC": {
-      "price": 4.71,
-      "dayChange": 1.07,
+    "ADBE": {
+      "price": 225.11,
+      "dayChange": 6.1,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -1026,19 +674,171 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 879.9713639098713,
+        "marketCap": 89481.22422760015,
         "pe": "N/A",
-        "sector": "Energy",
-        "industry": "Energy"
+        "sector": "Technology",
+        "industry": "Technology"
       },
       "reddit": {
-        "mentions": 1,
-        "bullish": 0,
+        "mentions": 2,
+        "bullish": 1,
         "bearish": 0,
         "neutral": 1,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 2
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 2
+    },
+    "ACGL": {
+      "price": 103.36,
+      "dayChange": 3.26,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 36112.907203574025,
+        "pe": "N/A",
+        "sector": "Insurance",
+        "industry": "Insurance"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "TME": {
+      "price": 8.86,
+      "dayChange": 1.14,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 12795.147410595002,
+        "pe": "N/A",
+        "sector": "Media",
+        "industry": "Media"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "CROX": {
+      "price": 134.72,
+      "dayChange": 1.7,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 6694.189396296217,
+        "pe": "N/A",
+        "sector": "Textiles, Apparel & Luxury Goods",
+        "industry": "Textiles, Apparel & Luxury Goods"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "JD": {
+      "price": 30.19,
+      "dayChange": 0.33,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 290191.175985,
+        "pe": "N/A",
+        "sector": "Retail",
+        "industry": "Retail"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "MELI": {
+      "price": 1801.44,
+      "dayChange": 0.15,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 91327.92852509113,
+        "pe": "N/A",
+        "sector": "Retail",
+        "industry": "Retail"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
     },
     "GOOG": {
       "price": 319.09,
@@ -1064,37 +864,11 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 2,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 2
+        }
       },
       "reddit_mentions": 2
-    },
-    "SU": {
-      "price": 65.81,
-      "dayChange": -0.9,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 110376.06893,
-        "pe": "N/A",
-        "sector": "Energy",
-        "industry": "Energy"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
     },
     "RY": {
       "price": 209.09,
@@ -1120,7 +894,39 @@
         "bullish": 0,
         "bearish": 0,
         "neutral": 2,
-        "subreddits": {}
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "NBIS": {
+      "price": 187.77,
+      "dayChange": -15.02,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 47252.402830903564,
+        "pe": "N/A",
+        "sector": "Technology",
+        "industry": "Technology"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 0,
+        "bearish": 0,
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 2
+        }
       },
       "reddit_mentions": 2
     },
@@ -1144,183 +950,315 @@
         "industry": "Technology"
       },
       "reddit": {
-        "mentions": 1,
+        "mentions": 2,
         "bullish": 0,
         "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "NBIS": {
-      "price": 187.77,
-      "dayChange": -15.02,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 47252.402830903564,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "DELL": {
-      "price": 437.5,
-      "dayChange": -0.42,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 283622.95390201785,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "SAP": {
-      "price": 160.0,
-      "dayChange": 9.3,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 149821.174294,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "TEAM": {
-      "price": 86.88,
-      "dayChange": 8.4,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 22047.352429073486,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "CRM": {
-      "price": 163.66,
-      "dayChange": 4.29,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 134037.5337437307,
-        "pe": "N/A",
-        "sector": "Technology",
-        "industry": "Technology"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 0,
-        "bearish": 0,
-        "neutral": 1,
-        "subreddits": {}
-      },
-      "reddit_mentions": 1
-    },
-    "SAN": {
-      "price": 13.54,
-      "dayChange": 2.5,
-      "weekChange": null,
-      "monthChange": null,
-      "sixMonthChange": null,
-      "series": null,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null
-      },
-      "fundamentals": {
-        "marketCap": 170392.042769,
-        "pe": "N/A",
-        "sector": "Banking",
-        "industry": "Banking"
-      },
-      "reddit": {
-        "mentions": 1,
-        "bullish": 1,
-        "bearish": 0,
-        "neutral": 0,
+        "neutral": 2,
         "subreddits": {
-          "stocks": 1
+          "stocks": 2
         }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 2
+    },
+    "ICL": {
+      "price": 5.28,
+      "dayChange": -0.38,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 21033.106874923138,
+        "pe": "N/A",
+        "sector": "Chemicals",
+        "industry": "Chemicals"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "GSL": {
+      "price": 43.61,
+      "dayChange": 1.37,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 1566.3946118382146,
+        "pe": "N/A",
+        "sector": "Marine",
+        "industry": "Marine"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "MAIR": {
+      "price": 34.73,
+      "dayChange": -4.25,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 17409.036689162112,
+        "pe": "N/A",
+        "sector": "Building",
+        "industry": "Building"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "ARM": {
+      "price": 260.01,
+      "dayChange": -8.14,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 301154.569092,
+        "pe": "N/A",
+        "sector": "Semiconductors",
+        "industry": "Semiconductors"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "CARR": {
+      "price": 68.88,
+      "dayChange": -0.39,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 57210.38226808156,
+        "pe": "N/A",
+        "sector": "Building",
+        "industry": "Building"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "CF": {
+      "price": 125.07,
+      "dayChange": -1.29,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 19214.41487596417,
+        "pe": "N/A",
+        "sector": "Chemicals",
+        "industry": "Chemicals"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "MOS": {
+      "price": 22.3,
+      "dayChange": 0.09,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 7087.980495179533,
+        "pe": "N/A",
+        "sector": "Chemicals",
+        "industry": "Chemicals"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "NSC": {
+      "price": 350.66,
+      "dayChange": 0.61,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 78756.12722703934,
+        "pe": "N/A",
+        "sector": "Road & Rail",
+        "industry": "Road & Rail"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "CSX": {
+      "price": 53.23,
+      "dayChange": 0.8,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 98607.2390167078,
+        "pe": "N/A",
+        "sector": "Road & Rail",
+        "industry": "Road & Rail"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "SERV": {
+      "price": 4.81,
+      "dayChange": -4.56,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 372.1655634563492,
+        "pe": "N/A",
+        "sector": "Hotels, Restaurants & Leisure",
+        "industry": "Hotels, Restaurants & Leisure"
+      },
+      "reddit": {
+        "mentions": 3,
+        "bullish": 0,
+        "bearish": 0,
+        "neutral": 3,
+        "subreddits": {
+          "stocks": 3
+        }
+      },
+      "reddit_mentions": 3
     },
     "SPCX": {
       "price": 115.07,
@@ -1342,17 +1280,19 @@
         "industry": "Telecommunication"
       },
       "reddit": {
-        "mentions": 1,
+        "mentions": 3,
         "bullish": 1,
         "bearish": 0,
-        "neutral": 0,
-        "subreddits": {}
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 3
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 3
     },
-    "WPP": {
-      "price": 18.75,
-      "dayChange": 3.42,
+    "SBC": {
+      "price": 3.06,
+      "dayChange": 4.44,
       "weekChange": null,
       "monthChange": null,
       "sixMonthChange": null,
@@ -1364,29 +1304,235 @@
         "ma200": null
       },
       "fundamentals": {
-        "marketCap": 3070.27,
+        "marketCap": 314.7116643890785,
         "pe": "N/A",
-        "sector": "Media",
-        "industry": "Media"
+        "sector": "Health Care",
+        "industry": "Health Care"
       },
       "reddit": {
-        "mentions": 1,
+        "mentions": 2,
         "bullish": 0,
-        "bearish": 1,
-        "neutral": 0,
-        "subreddits": {}
+        "bearish": 0,
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 2
+        }
       },
-      "reddit_mentions": 1
+      "reddit_mentions": 2
+    },
+    "SNDK": {
+      "price": 1436.56,
+      "dayChange": -10.79,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 212739.83053138375,
+        "pe": "N/A",
+        "sector": "Technology",
+        "industry": "Technology"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 0,
+        "bearish": 0,
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "SAN": {
+      "price": 13.54,
+      "dayChange": 2.5,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 170392.042769,
+        "pe": "N/A",
+        "sector": "Banking",
+        "industry": "Banking"
+      },
+      "reddit": {
+        "mentions": 3,
+        "bullish": 2,
+        "bearish": 0,
+        "neutral": 0,
+        "subreddits": {
+          "stocks": 3
+        }
+      },
+      "reddit_mentions": 3
+    },
+    "SAP": {
+      "price": 160.0,
+      "dayChange": 9.3,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 149821.174294,
+        "pe": "N/A",
+        "sector": "Technology",
+        "industry": "Technology"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 0,
+        "bearish": 0,
+        "neutral": 2,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "SKHY": {
+      "price": 154.57,
+      "dayChange": -8.81,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 1398692853.271484,
+        "pe": "N/A",
+        "sector": "Semiconductors",
+        "industry": "Semiconductors"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 1,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "LTM": {
+      "price": 50.15,
+      "dayChange": 0.62,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 13494076,
+        "pe": "N/A",
+        "sector": "Airlines",
+        "industry": "Airlines"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 0,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
+    },
+    "FCF": {
+      "price": 20.87,
+      "dayChange": 0.53,
+      "weekChange": null,
+      "monthChange": null,
+      "sixMonthChange": null,
+      "series": null,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null
+      },
+      "fundamentals": {
+        "marketCap": 2122.1546172683043,
+        "pe": "N/A",
+        "sector": "Banking",
+        "industry": "Banking"
+      },
+      "reddit": {
+        "mentions": 2,
+        "bullish": 1,
+        "bearish": 0,
+        "neutral": 0,
+        "subreddits": {
+          "stocks": 2
+        }
+      },
+      "reddit_mentions": 2
     }
   },
   "sectors": {},
   "topToday": [
     {
       "ticker": "MU",
-      "mentions": 5
+      "mentions": 9
+    },
+    {
+      "ticker": "MSFT",
+      "mentions": 7
+    },
+    {
+      "ticker": "INTU",
+      "mentions": 6
     },
     {
       "ticker": "NVDA",
+      "mentions": 5
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 5
+    },
+    {
+      "ticker": "AMD",
+      "mentions": 4
+    },
+    {
+      "ticker": "TSM",
+      "mentions": 4
+    },
+    {
+      "ticker": "MSCI",
       "mentions": 3
     },
     {
@@ -1394,81 +1540,81 @@
       "mentions": 3
     },
     {
-      "ticker": "INTU",
+      "ticker": "SERV",
       "mentions": 3
     },
     {
-      "ticker": "AMD",
+      "ticker": "SPCX",
       "mentions": 3
     },
     {
-      "ticker": "MSCI",
-      "mentions": 2
-    },
-    {
-      "ticker": "MSFT",
-      "mentions": 2
-    },
-    {
-      "ticker": "TSM",
-      "mentions": 2
-    },
-    {
-      "ticker": "GOOG",
-      "mentions": 2
-    },
-    {
-      "ticker": "RY",
-      "mentions": 2
-    },
-    {
-      "ticker": "GOLD",
-      "mentions": 1
-    },
-    {
-      "ticker": "YPF",
-      "mentions": 1
-    },
-    {
-      "ticker": "LMT",
-      "mentions": 1
-    },
-    {
-      "ticker": "AMZN",
-      "mentions": 1
-    },
-    {
-      "ticker": "MP",
-      "mentions": 1
-    },
-    {
-      "ticker": "RIVN",
-      "mentions": 1
-    },
-    {
-      "ticker": "LDOS",
-      "mentions": 1
+      "ticker": "SAN",
+      "mentions": 3
     },
     {
       "ticker": "WMT",
-      "mentions": 1
+      "mentions": 2
     },
     {
-      "ticker": "RTX",
-      "mentions": 1
+      "ticker": "INTC",
+      "mentions": 2
     },
     {
-      "ticker": "COST",
-      "mentions": 1
+      "ticker": "HBM",
+      "mentions": 2
+    },
+    {
+      "ticker": "PBR",
+      "mentions": 2
+    },
+    {
+      "ticker": "QFIN",
+      "mentions": 2
+    },
+    {
+      "ticker": "ADBE",
+      "mentions": 2
+    },
+    {
+      "ticker": "ACGL",
+      "mentions": 2
+    },
+    {
+      "ticker": "TME",
+      "mentions": 2
     }
   ],
   "top7Days": [
     {
       "ticker": "MU",
-      "mentions7d": 5
+      "mentions7d": 9
+    },
+    {
+      "ticker": "MSFT",
+      "mentions7d": 7
+    },
+    {
+      "ticker": "INTU",
+      "mentions7d": 6
     },
     {
       "ticker": "NVDA",
+      "mentions7d": 5
+    },
+    {
+      "ticker": "AMZN",
+      "mentions7d": 5
+    },
+    {
+      "ticker": "AMD",
+      "mentions7d": 4
+    },
+    {
+      "ticker": "TSM",
+      "mentions7d": 4
+    },
+    {
+      "ticker": "MSCI",
       "mentions7d": 3
     },
     {
@@ -1476,75 +1622,51 @@
       "mentions7d": 3
     },
     {
-      "ticker": "INTU",
+      "ticker": "SERV",
       "mentions7d": 3
     },
     {
-      "ticker": "AMD",
+      "ticker": "SPCX",
       "mentions7d": 3
     },
     {
-      "ticker": "MSCI",
-      "mentions7d": 2
-    },
-    {
-      "ticker": "MSFT",
-      "mentions7d": 2
-    },
-    {
-      "ticker": "TSM",
-      "mentions7d": 2
-    },
-    {
-      "ticker": "GOOG",
-      "mentions7d": 2
-    },
-    {
-      "ticker": "RY",
-      "mentions7d": 2
-    },
-    {
-      "ticker": "GOLD",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "YPF",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "LMT",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "AMZN",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "MP",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "RIVN",
-      "mentions7d": 1
-    },
-    {
-      "ticker": "LDOS",
-      "mentions7d": 1
+      "ticker": "SAN",
+      "mentions7d": 3
     },
     {
       "ticker": "WMT",
-      "mentions7d": 1
+      "mentions7d": 2
     },
     {
-      "ticker": "RTX",
-      "mentions7d": 1
+      "ticker": "INTC",
+      "mentions7d": 2
     },
     {
-      "ticker": "COST",
-      "mentions7d": 1
+      "ticker": "HBM",
+      "mentions7d": 2
+    },
+    {
+      "ticker": "PBR",
+      "mentions7d": 2
+    },
+    {
+      "ticker": "QFIN",
+      "mentions7d": 2
+    },
+    {
+      "ticker": "ADBE",
+      "mentions7d": 2
+    },
+    {
+      "ticker": "ACGL",
+      "mentions7d": 2
+    },
+    {
+      "ticker": "TME",
+      "mentions7d": 2
     }
   ],
-  "updated_at": "2026-07-25T14:30:58.341125+00:00",
+  "updated_at": "2026-07-25T15:09:20.667783+00:00",
   "subreddits": [
     "stocks",
     "investing",
