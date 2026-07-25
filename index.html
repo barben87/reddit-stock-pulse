@@ -16,26 +16,16 @@
     --sub1:#6E9BFF; --sub2:#B79CFF; --sub3:#FF7D52; --sub4:#2FE0C9;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background:radial-gradient(ellipse at 50% -10%, #161B26 0%, var(--void) 55%);
-    min-height:100vh; color:var(--text); font-family:'Heebo',sans-serif;
-  }
+  body{background:radial-gradient(ellipse at 50% -10%, #161B26 0%, var(--void) 55%);min-height:100vh; color:var(--text); font-family:'Heebo',sans-serif;}
   .mono{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums;}
-  .card{background:linear-gradient(165deg,var(--panelTop),var(--panelBottom));
-    border:1px solid var(--line); border-radius:16px;
-    box-shadow:0 12px 30px -14px rgba(0,0,0,.55), 0 2px 8px -2px rgba(0,0,0,.4);}
+  .card{background:linear-gradient(165deg,var(--panelTop),var(--panelBottom));border:1px solid var(--line); border-radius:16px;box-shadow:0 12px 30px -14px rgba(0,0,0,.55), 0 2px 8px -2px rgba(0,0,0,.4);}
   header{border-bottom:1px solid var(--line); padding:18px 20px;}
-  .title{font-size:21px; font-weight:800;
-    background:linear-gradient(90deg,var(--text),var(--gold));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
+  .title{font-size:21px; font-weight:800;background:linear-gradient(90deg,var(--text),var(--gold));-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;}
   .live{width:8px;height:8px;border-radius:99px;background:var(--gain);display:inline-block;box-shadow:0 0 8px var(--gain);}
-  .subpill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;
-    border:1px solid var(--line);font-size:11px;background:rgba(255,255,255,0.02);}
+  .subpill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);font-size:11px;background:rgba(255,255,255,0.02);}
   .dot{width:6px;height:6px;border-radius:99px;display:inline-block;}
   .tabs{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
-  .tab{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:10px;cursor:pointer;
-    border:1px solid var(--line);background:transparent;color:var(--muted);font-size:13px;font-weight:700;
-    font-family:'Heebo';transition:all .15s;}
+  .tab{display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:13px;font-weight:700;font-family:'Heebo';transition:all .15s;}
   .tab.active{border-color:var(--gold);background:var(--goldDim);color:var(--gold);}
   .layout{padding:20px;display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;}
   @media(max-width:820px){.layout{grid-template-columns:1fr;}}
@@ -49,91 +39,97 @@
   .changeGrid{display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);justify-content:space-between;}
   .changeItem{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;}
   .detail{border-top:1px solid var(--line);padding:16px 4px 6px;margin-top:14px;}
-  .dtab{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;cursor:pointer;
-    border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12.5px;font-family:'Heebo';margin-left:6px;margin-bottom:6px;}
+  .dtab{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12.5px;font-family:'Heebo';margin-left:6px;margin-bottom:6px;}
   .dtab.active{border-color:var(--gold);background:var(--goldDim);color:var(--gold);}
   .kv{background:var(--panelRaised);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
   .kv .k{font-size:11px;color:var(--muted);margin-bottom:4px;}
   .kv .v{font-size:15px;font-weight:700;}
   .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-  .sectorRow{display:grid;grid-template-columns:128px 1fr 62px;gap:12px;align-items:center;margin-bottom:14px;}
-  .sectorBar{position:relative;height:22px;}
-  .sectorBar .track{position:absolute;inset:0;background:rgba(255,255,255,0.04);border-radius:6px;}
-  .sectorBar .mid{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--lineStrong);}
-  .sectorBar .fill{position:absolute;top:2px;bottom:2px;border-radius:4px;opacity:.85;}
+  .rangeBtns{display:flex;gap:6px;margin-bottom:10px;}
+  .rangeBtn{padding:4px 10px;border-radius:6px;font-size:11.5px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);font-family:'Heebo';}
+  .rangeBtn.active{border-color:var(--gold);background:var(--goldDim);color:var(--gold);}
+  .chartLegend{display:flex;gap:14px;margin-top:8px;flex-wrap:wrap;font-size:11px;color:var(--muted);}
+  .sectorRow{display:grid;grid-template-columns:140px 1fr 130px;gap:12px;align-items:center;margin-bottom:16px;}
+  @media(max-width:640px){.sectorRow{grid-template-columns:100px 1fr;}.sectorRow .sectorChanges{grid-column:1/-1;}}
   .loading{padding:60px 20px;text-align:center;color:var(--muted);font-size:16px;}
-  .spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;
-    animation:spin 0.8s linear infinite;margin:0 auto 16px;}
+  .spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
   @keyframes spin{to{transform:rotate(360deg);}}
   ::-webkit-scrollbar{height:6px;width:6px;}
   ::-webkit-scrollbar-thumb{background:var(--lineStrong);border-radius:4px;}
+  .empty{color:var(--faint);font-size:12px;padding:12px;text-align:center;}
 </style>
 </head>
 <body>
-  <div id="app">
-    <div class="loading"><div class="spinner"></div>טוען נתונים מ-Reddit ו-Finnhub...</div>
-  </div>
+  <div id="app"><div class="loading"><div class="spinner"></div>טוען נתונים...</div></div>
 
 <script>
 const SUB_META = {
-  stocks:{label:'r/stocks',color:'var(--sub1)'},
-  investing:{label:'r/investing',color:'var(--sub2)'},
-  wallstreetbets:{label:'r/wallstreetbets',color:'var(--sub3)'},
-  ValueInvesting:{label:'r/ValueInvesting',color:'var(--sub4)'},
+  stocks:{label:'r/stocks',color:'#6E9BFF'},
+  investing:{label:'r/investing',color:'#B79CFF'},
+  wallstreetbets:{label:'r/wallstreetbets',color:'#FF7D52'},
+  ValueInvesting:{label:'r/ValueInvesting',color:'#2FE0C9'},
 };
-
 const DATA_URL = './data/stocks.json';
+let DATA=null, expandedTicker=null, currentView='today', detailTab={}, chartRange={};
 
-let DATA = null;
-let expandedTicker = null;
-let currentView = 'today';
-let detailTab = {};
-
-const fmt$ = n => (n==null||isNaN(n)) ? 'N/A' : '$'+Number(n).toFixed(n<20?2:1);
-const fmtPct = n => (n==null||isNaN(n)) ? 'N/A' : (n>=0?'+':'')+Number(n).toFixed(1)+'%';
-const col = n => n>=0 ? 'var(--gain)':'var(--loss)';
-const dimCol = n => n>=0 ? 'var(--gainDim)':'var(--lossDim)';
-
-function fmtCap(v){
-  if(v==null||v==='N/A'||isNaN(v)) return 'N/A';
-  const n=Number(v);
-  if(n>=1000000) return (n/1000000).toFixed(2)+'T$';
-  if(n>=1000) return (n/1000).toFixed(1)+'B$';
-  return n.toFixed(0)+'M$';
-}
+const fmt$ = n => (n==null||isNaN(n))?'N/A':'$'+Number(n).toFixed(n<20?2:1);
+const fmtPct = n => (n==null||isNaN(n))?'—':(n>=0?'+':'')+Number(n).toFixed(1)+'%';
+const col = n => (n==null||isNaN(n))?'var(--muted)':(n>=0?'var(--gain)':'var(--loss)');
+const dimCol = n => n>=0?'var(--gainDim)':'var(--lossDim)';
+function fmtCap(v){if(v==null||v==='N/A'||isNaN(v))return 'N/A';const n=Number(v);if(n>=1000000)return (n/1000000).toFixed(2)+'T$';if(n>=1000)return (n/1000).toFixed(1)+'B$';return n.toFixed(0)+'M$';}
 
 async function load(){
   try{
-    const res = await fetch(DATA_URL, {cache:'no-store'});
+    const res = await fetch(DATA_URL,{cache:'no-store'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     DATA = await res.json();
     render();
   }catch(e){
-    document.getElementById('app').innerHTML =
-      '<div class="loading">❌ לא הצלחתי לטעון את הנתונים ('+e.message+').<br><br>'+
-      'ודא שהקובץ data/stocks.json קיים בריפו ושה-workflow רץ לפחות פעם אחת.</div>';
+    document.getElementById('app').innerHTML='<div class="loading">❌ טעינת הנתונים נכשלה ('+e.message+').<br><br>ודא ש-data/stocks.json קיים ושה-workflow רץ.</div>';
   }
 }
+function stocksArray(){return Object.entries(DATA.stocks||{}).map(([ticker,d])=>({ticker,...d}));}
 
-function stocksArray(){
-  const s = DATA.stocks || {};
-  return Object.entries(s).map(([ticker,d])=>({ticker, ...d}));
+/* ---- SVG line chart with optional MA overlay ---- */
+function svgChart(series, maLevel, rangeN){
+  if(!series || series.length<2) return '<div class="empty">אין נתוני גרף זמינים למניה זו (מחוץ למכסת ה-API היומית — יתעדכן בימים הקרובים)</div>';
+  const data = series.slice(-rangeN);
+  const w=560, h=200, pad=6;
+  const min=Math.min(...data), max=Math.max(...data), range=(max-min)||1;
+  const x=i=>pad+(i/(data.length-1))*(w-2*pad);
+  const y=v=>h-pad-((v-min)/range)*(h-2*pad);
+  const line=data.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const up = data[data.length-1]>=data[0];
+  const stroke = up?'var(--gain)':'var(--loss)';
+  const area = `${pad},${h-pad} ${line} ${w-pad},${h-pad}`;
+  // MA line across same window (flat ref since we only have latest MA value)
+  let maLine='';
+  if(maLevel){
+    const yy=y(maLevel).toFixed(1);
+    if(maLevel>=min && maLevel<=max)
+      maLine=`<line x1="${pad}" y1="${yy}" x2="${w-pad}" y2="${yy}" stroke="var(--gold)" stroke-width="1.3" stroke-dasharray="5 4"/>`;
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:200px;">
+    <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${up?'#3FE0A0':'#FF6B6B'}" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="${up?'#3FE0A0':'#FF6B6B'}" stop-opacity="0"/>
+    </linearGradient></defs>
+    <polygon points="${area}" fill="url(#cg)"/>
+    <polyline points="${line}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linejoin="round"/>
+    ${maLine}
+  </svg>`;
 }
 
 function render(){
-  const app = document.getElementById('app');
-  const stocks = stocksArray();
-  const updated = DATA.updated_at ? new Date(DATA.updated_at).toLocaleString('he-IL') : '';
-
-  app.innerHTML = `
+  const app=document.getElementById('app');
+  const stocks=stocksArray();
+  const updated = DATA.updated_at? new Date(DATA.updated_at).toLocaleString('he-IL'):'';
+  app.innerHTML=`
     <header>
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
         <div>
-          <div style="display:flex;align-items:center;gap:9px;">
-            <span class="live"></span>
-            <h1 class="title">Stock Pulse — דופק הרשת</h1>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-top:5px;">${updated} · ${stocks.length} מניות שדוברו ב-Reddit</p>
+          <div style="display:flex;align-items:center;gap:9px;"><span class="live"></span><h1 class="title">Stock Pulse — דופק הרשת</h1></div>
+          <p style="font-size:12px;color:var(--muted);margin-top:5px;">${updated} · ${stocks.length} מניות · חלון 24 שעות אחרונות</p>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           ${Object.entries(SUB_META).map(([k,v])=>`<span class="subpill"><span class="dot" style="background:${v.color}"></span>${v.label}</span>`).join('')}
@@ -141,74 +137,80 @@ function render(){
       </div>
       <div class="tabs">
         <button class="tab ${currentView==='today'?'active':''}" onclick="setView('today')">🔥 היום</button>
-        <button class="tab ${currentView==='sectors'?'active':''}" onclick="setView('sectors')">📊 סקטורים</button>
+        <button class="tab ${currentView==='week'?'active':''}" onclick="setView('week')">📅 7 ימים אחרונים</button>
+        <button class="tab ${currentView==='sectors'?'active':''}" onclick="setView('sectors')">📊 סקטורים (ETF)</button>
       </div>
     </header>
-    <div id="viewBody"></div>
-  `;
+    <div id="viewBody"></div>`;
   renderBody();
 }
-
-function setView(v){ currentView=v; render(); }
-
+function setView(v){currentView=v;render();}
 function renderBody(){
-  const body = document.getElementById('viewBody');
-  if(currentView==='today') body.innerHTML = renderToday();
-  else body.innerHTML = renderSectors();
+  const b=document.getElementById('viewBody');
+  b.innerHTML = currentView==='today'?renderToday() : currentView==='week'?renderWeek() : renderSectors();
 }
 
 function renderToday(){
-  const stocks = stocksArray();
-  const gainers = [...stocks].sort((a,b)=>b.dayChange-a.dayChange).slice(0,10);
-  const losers  = [...stocks].sort((a,b)=>a.dayChange-b.dayChange).slice(0,10);
-  const byMentions = [...stocks].sort((a,b)=>(b.reddit_mentions||0)-(a.reddit_mentions||0));
-
-  return `
-    <div class="layout">
-      <div class="movers">
-        ${moversCard('10 העולות ביותר היום', gainers, 'var(--gain)', '▲')}
-        ${moversCard('10 היורדות ביותר היום', losers, 'var(--loss)', '▼')}
-      </div>
-      <div>
-        <div class="eyebrow"><span class="bar"></span>כל המניות המדוברות, ממוינות לפי מספר אזכורים</div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          ${byMentions.map(s=>stockCard(s)).join('')}
-        </div>
-      </div>
+  const stocks=stocksArray();
+  const gainers=[...stocks].sort((a,b)=>b.dayChange-a.dayChange).slice(0,10);
+  const losers=[...stocks].sort((a,b)=>a.dayChange-b.dayChange).slice(0,10);
+  const byMentions=[...stocks].sort((a,b)=>(b.reddit_mentions||0)-(a.reddit_mentions||0));
+  return `<div class="layout">
+    <div class="movers">
+      ${moversCard('10 העולות ביותר היום',gainers,'var(--gain)','▲')}
+      ${moversCard('10 היורדות ביותר היום',losers,'var(--loss)','▼')}
     </div>
-  `;
+    <div>
+      <div class="eyebrow"><span class="bar"></span>הכי מדוברות היום (24 שעות אחרונות)</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">${byMentions.map(s=>stockCard(s)).join('')}</div>
+    </div>
+  </div>`;
 }
 
-function moversCard(title, list, color, arrow){
-  return `<div class="card" style="padding:16px;">
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;color:${color};font-size:13px;font-weight:700;">
-      <span>${arrow}</span> ${title}
+function renderWeek(){
+  const top7=(DATA.top7Days||[]);
+  if(top7.length===0) return `<div class="loading">עדיין אוספים היסטוריה של 7 ימים.<br>העמוד יתמלא ככל שה-workflow ירוץ בימים הקרובים.</div>`;
+  const stocks=Object.fromEntries(stocksArray().map(s=>[s.ticker,s]));
+  const maxM=Math.max(...top7.map(t=>t.mentions7d),1);
+  return `<div style="padding:20px;max-width:900px;">
+    <div class="eyebrow"><span class="bar"></span>הכי מדוברות ב-7 הימים האחרונים (מצטבר)</div>
+    <div class="card" style="padding:16px;">
+      ${top7.map((t,i)=>{
+        const s=stocks[t.ticker];
+        const barW=(t.mentions7d/maxM)*100;
+        return `<div style="display:grid;grid-template-columns:26px 90px 1fr 70px;gap:12px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--line);">
+          <span style="font-size:11px;color:var(--faint);">${i+1}</span>
+          <span class="mono" style="font-weight:800;font-size:13.5px;">${t.ticker}</span>
+          <div style="position:relative;height:20px;background:rgba(255,255,255,0.04);border-radius:5px;overflow:hidden;">
+            <div style="position:absolute;inset:0 auto 0 0;width:${barW}%;background:linear-gradient(90deg,var(--gold),rgba(240,180,41,0.2));border-radius:5px;"></div>
+            <span class="mono" style="position:absolute;right:8px;top:2px;font-size:11px;color:var(--text);">${t.mentions7d} אזכורים</span>
+          </div>
+          <span class="mono" style="font-size:12.5px;font-weight:700;color:${s?col(s.dayChange):'var(--faint)'};text-align:left;">${s?fmtPct(s.dayChange):'—'}</span>
+        </div>`;
+      }).join('')}
     </div>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:12px;">האחוז מציג את שינוי היום של המניה — כדי לראות אם מה שדובר השבוע עדיין נע. מניה בלי אחוז לא דוברה היום.</p>
+  </div>`;
+}
+
+function moversCard(title,list,color,arrow){
+  return `<div class="card" style="padding:16px;">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;color:${color};font-size:13px;font-weight:700;"><span>${arrow}</span> ${title}</div>
     ${list.map((s,i)=>`<div class="moverRow">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:10.5px;color:var(--faint);width:14px;">${i+1}</span>
-        <span class="mono" style="font-weight:700;font-size:12.5px;">${s.ticker}</span>
-      </div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10.5px;color:var(--faint);width:14px;">${i+1}</span><span class="mono" style="font-weight:700;font-size:12.5px;">${s.ticker}</span></div>
       <span class="mono" style="font-weight:700;font-size:12.5px;color:${color};">${fmtPct(s.dayChange)}</span>
     </div>`).join('')}
   </div>`;
 }
 
 function stockCard(s){
-  const up = s.dayChange>=0;
-  const r = s.reddit||{};
-  const subs = r.subreddits||{};
-  const expanded = expandedTicker===s.ticker;
+  const up=s.dayChange>=0, r=s.reddit||{}, subs=r.subreddits||{}, expanded=expandedTicker===s.ticker;
   return `<div class="card">
     <div class="stockCard" onclick="toggle('${s.ticker}')">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
         <div style="display:flex;flex-direction:column;gap:5px;min-width:0;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="mono" style="font-weight:800;font-size:15.5px;">${s.ticker}</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11.5px;">
-            💬 ${s.reddit_mentions||0} אזכורים היום
-          </div>
+          <span class="mono" style="font-weight:800;font-size:15.5px;">${s.ticker}</span>
+          <div style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11.5px;">💬 ${s.reddit_mentions||0} אזכורים ב-24ש׳</div>
           <div style="display:flex;gap:9px;flex-wrap:wrap;">
             ${Object.entries(SUB_META).map(([k,v])=>subs[k]?`<span style="display:flex;align-items:center;gap:4px;"><span class="dot" style="background:${v.color};box-shadow:0 0 6px ${v.color};"></span><span class="mono" style="font-size:11px;color:var(--muted);">${subs[k]}</span></span>`:'').join('')}
           </div>
@@ -219,116 +221,86 @@ function stockCard(s){
         </div>
       </div>
       <div class="changeGrid">
-        ${changeItem('יום', s.dayChange)}
-        ${changeItem('שבוע', s.weekChange)}
-        ${changeItem('חודש', s.monthChange)}
-        ${changeItem('חצי שנה', s.sixMonthChange)}
+        ${changeItem('יום',s.dayChange)}${changeItem('שבוע',s.weekChange)}${changeItem('חודש',s.monthChange)}${changeItem('חצי שנה',s.sixMonthChange)}
         <span style="align-self:center;color:var(--muted);transform:${expanded?'rotate(180deg)':'none'};transition:transform .2s;">▾</span>
       </div>
     </div>
     ${expanded?detailPanel(s):''}
   </div>`;
 }
-
-function changeItem(label,val){
-  return `<div class="changeItem">
-    <span style="font-size:10px;color:var(--faint);">${label}</span>
-    <span class="mono" style="font-size:13px;font-weight:700;color:${col(val)};">${fmtPct(val)}</span>
-  </div>`;
-}
+function changeItem(label,val){return `<div class="changeItem"><span style="font-size:10px;color:var(--faint);">${label}</span><span class="mono" style="font-size:13px;font-weight:700;color:${col(val)};">${fmtPct(val)}</span></div>`;}
 
 function detailPanel(s){
-  const tab = detailTab[s.ticker]||'overview';
-  const f = s.fundamentals||{};
-  const r = s.reddit||{};
-  const sentTotal = (r.bullish||0)+(r.bearish||0)+(r.neutral||0);
-  const bullPct = sentTotal? Math.round((r.bullish||0)/sentTotal*100):0;
-
-  let content = '';
-  if(tab==='overview'){
-    content = `<div class="grid2">
-      <div class="kv"><div class="k">סקטור</div><div class="v" style="font-size:13px;">${f.sector||'לא ידוע'}</div></div>
-      <div class="kv"><div class="k">תעשייה</div><div class="v" style="font-size:13px;">${f.industry||'לא ידוע'}</div></div>
-      <div class="kv" style="grid-column:1/-1;"><div class="k">סנטימנט ברדיט</div>
-        <div class="v mono" style="color:${bullPct>=50?'var(--gain)':'var(--loss)'};">${bullPct}% חיובי · ${r.bullish||0}📈 / ${r.bearish||0}📉 / ${r.neutral||0}➖</div></div>
+  const tab=detailTab[s.ticker]||'chart', f=s.fundamentals||{}, r=s.reddit||{}, t=s.technicals||{};
+  const rng=chartRange[s.ticker]||126;
+  const sentTotal=(r.bullish||0)+(r.bearish||0)+(r.neutral||0);
+  const bullPct=sentTotal?Math.round((r.bullish||0)/sentTotal*100):0;
+  let content='';
+  if(tab==='chart'){
+    const activeMA = rng<=30 ? t.ma20 : rng<=63 ? t.ma50 : t.ma150;
+    const maLabel = rng<=30 ? 'MA20' : rng<=63 ? 'MA50' : 'MA150';
+    content=`<div>
+      <div class="rangeBtns">
+        ${[['שבוע',5],['חודש',21],['3 חודשים',63],['חצי שנה',126]].map(([lbl,n])=>`<button class="rangeBtn ${rng===n?'active':''}" onclick="setRange('${s.ticker}',${n})">${lbl}</button>`).join('')}
+      </div>
+      ${svgChart(s.series,activeMA,rng)}
+      <div class="chartLegend">
+        <span><span style="color:${(s.series&&s.series[s.series.length-1]>=s.series[Math.max(0,s.series.length-rng)])?'var(--gain)':'var(--loss)'};">━</span> מחיר</span>
+        ${activeMA?`<span><span style="color:var(--gold);">┈</span> ${maLabel} (${fmt$(activeMA)})</span>`:''}
+      </div>
+    </div>`;
+  } else if(tab==='technical'){
+    content=`<div class="grid2">
+      ${[['ממוצע נע 20',t.ma20],['ממוצע נע 50',t.ma50],['ממוצע נע 150',t.ma150],['ממוצע נע 200',t.ma200]].map(([k,v])=>`<div class="kv"><div class="k">${k}</div><div class="v mono">${v?fmt$(v):'—'}</div></div>`).join('')}
+      <div class="kv" style="grid-column:1/-1;"><div class="k">מחיר מול MA150</div><div class="v mono" style="color:${t.ma150&&s.price>=t.ma150?'var(--gain)':'var(--loss)'};">${t.ma150?(s.price>=t.ma150?'מעל הממוצע — מגמה עולה':'מתחת לממוצע — מגמה יורדת'):'אין נתון'}</div></div>
     </div>`;
   } else if(tab==='fundamentals'){
-    content = `<div class="grid2">
+    content=`<div class="grid2">
       <div class="kv"><div class="k">שווי שוק</div><div class="v mono">${fmtCap(f.marketCap)}</div></div>
       <div class="kv"><div class="k">מכפיל רווח (P/E)</div><div class="v mono">${f.pe??'N/A'}</div></div>
-      <div class="kv" style="grid-column:1/-1;"><div class="k">מחיר נוכחי</div><div class="v mono">${fmt$(s.price)}</div></div>
-    </div>`;
-  } else if(tab==='performance'){
-    const labels=['היום','שבוע','חודש','חצי שנה'];
-    const keys=['dayChange','weekChange','monthChange','sixMonthChange'];
-    content = `<div class="grid2">
-      ${keys.map((k,i)=>`<div class="kv"><div class="k">${labels[i]}</div><div class="v mono" style="color:${col(s[k])};">${fmtPct(s[k])}</div></div>`).join('')}
+      <div class="kv"><div class="k">סקטור</div><div class="v" style="font-size:13px;">${f.sector||'לא ידוע'}</div></div>
+      <div class="kv"><div class="k">מחיר נוכחי</div><div class="v mono">${fmt$(s.price)}</div></div>
     </div>`;
   } else if(tab==='reddit'){
-    content = `<div class="grid2">
-      ${Object.entries(SUB_META).map(([k,v])=>`<div class="kv"><div class="k" style="display:flex;align-items:center;gap:5px;"><span class="dot" style="background:${v.color};"></span>${v.label}</div><div class="v mono">${(r.subreddits||{})[k]||0} אזכורים</div></div>`).join('')}
-      <div class="kv" style="grid-column:1/-1;"><div class="k">סה״כ אזכורים</div><div class="v mono">${s.reddit_mentions||0}</div></div>
+    content=`<div class="grid2">
+      ${Object.entries(SUB_META).map(([k,v])=>`<div class="kv"><div class="k" style="display:flex;align-items:center;gap:5px;"><span class="dot" style="background:${v.color};"></span>${v.label}</div><div class="v mono">${(r.subreddits||{})[k]||0}</div></div>`).join('')}
+      <div class="kv" style="grid-column:1/-1;"><div class="k">סנטימנט</div><div class="v mono" style="color:${bullPct>=50?'var(--gain)':'var(--loss)'};">${bullPct}% חיובי · ${r.bullish||0}📈 / ${r.bearish||0}📉 / ${r.neutral||0}➖</div></div>
     </div>`;
   }
-
-  const tabs = [['overview','סקירה'],['fundamentals','פנדמנטלי'],['performance','ביצועים'],['reddit','Reddit']];
-  return `<div style="padding:0 16px 16px;">
-    <div class="detail">
-      <div style="margin-bottom:14px;">
-        ${tabs.map(([id,label])=>`<button class="dtab ${tab===id?'active':''}" onclick="setDetailTab('${s.ticker}','${id}')">${label}</button>`).join('')}
-      </div>
-      ${content}
-    </div>
-  </div>`;
+  const tabs=[['chart','גרף'],['technical','טכני'],['fundamentals','פנדמנטלי'],['reddit','Reddit']];
+  return `<div style="padding:0 16px 16px;"><div class="detail">
+    <div style="margin-bottom:14px;">${tabs.map(([id,label])=>`<button class="dtab ${tab===id?'active':''}" onclick="setDetailTab('${s.ticker}','${id}')">${label}</button>`).join('')}</div>
+    ${content}
+  </div></div>`;
 }
 
 function renderSectors(){
-  const secs = Object.entries(DATA.sectors||{}).map(([name,d])=>({name,...d}))
-    .sort((a,b)=>b.avgWeekChange-a.avgWeekChange);
-  if(secs.length===0) return `<div class="loading">אין עדיין נתוני סקטורים.</div>`;
-  const maxAbs = Math.max(...secs.map(s=>Math.abs(s.avgWeekChange)),1);
-
-  return `<div style="padding:20px;max-width:900px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-      <span style="font-size:18px;">📊</span>
-      <h2 style="font-size:17px;font-weight:800;">סקטורים — עלייה/ירידה לפי המניות המדוברות</h2>
-    </div>
-    <p style="font-size:12.5px;color:var(--muted);margin:4px 0 18px;">ממוצע השינוי של המניות בכל סקטור, משוקלל לפי נפח האזכורים ברדיט.</p>
+  const secs=Object.entries(DATA.sectors||{}).map(([name,d])=>({name,...d})).filter(s=>s.series).sort((a,b)=>(b.monthChange||0)-(a.monthChange||0));
+  if(secs.length===0) return `<div class="loading">אין עדיין נתוני סקטורים.<br>נטענים מ-Alpha Vantage — יופיעו אחרי הריצה הבאה.</div>`;
+  return `<div style="padding:20px;max-width:960px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;"><span style="font-size:18px;">📊</span><h2 style="font-size:17px;font-weight:800;">סקטורים לפי ETF — טרנד לאורך זמן</h2></div>
+    <p style="font-size:12.5px;color:var(--muted);margin:4px 0 18px;">כל סקטור מיוצג ע״י ה-ETF שלו (XLK טכנולוגיה, XLF פיננסים וכו׳). ממוין לפי ביצועי החודש האחרון.</p>
     <div class="card" style="padding:16px;">
       ${secs.map(sec=>{
-        const up = sec.avgWeekChange>=0;
-        const barPct = (Math.abs(sec.avgWeekChange)/maxAbs)*50;
         return `<div class="sectorRow">
-          <div style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+          <div style="display:flex;flex-direction:column;gap:2px;">
             <span style="font-size:12.5px;font-weight:700;">${sec.name}</span>
-            <span style="font-size:10.5px;color:var(--faint);">${sec.tickers.length} מניות · ${sec.totalMentions} אזכורים</span>
+            <span class="mono" style="font-size:10.5px;color:var(--faint);">${sec.etf} · ${fmt$(sec.price)}</span>
           </div>
-          <div class="sectorBar" dir="ltr">
-            <div class="track"></div><div class="mid"></div>
-            <div class="fill" style="${up?'left:50%':'left:'+(50-barPct)+'%'};width:${barPct}%;background:${up?'var(--gain)':'var(--loss)'};"></div>
-          </div>
-          <span class="mono" style="font-weight:700;font-size:12.5px;text-align:left;color:${col(sec.avgWeekChange)};">${fmtPct(sec.avgWeekChange)}</span>
-          <div style="grid-column:2/3;display:flex;gap:6px;flex-wrap:wrap;margin-top:-4px;">
-            ${sec.tickers.map(t=>`<span class="mono" style="font-size:10px;color:var(--muted);background:rgba(255,255,255,0.04);padding:2px 7px;border-radius:999px;">${t}</span>`).join('')}
+          <div style="height:44px;">${svgChart(sec.series,null,126).replace('height:200px','height:44px')}</div>
+          <div class="sectorChanges" style="display:flex;gap:10px;justify-content:flex-start;">
+            ${[['שבוע',sec.weekChange],['חודש',sec.monthChange],['½ שנה',sec.sixMonthChange]].map(([l,v])=>`<div style="text-align:center;"><div style="font-size:9.5px;color:var(--faint);">${l}</div><div class="mono" style="font-size:12px;font-weight:700;color:${col(v)};">${fmtPct(v)}</div></div>`).join('')}
           </div>
         </div>`;
       }).join('')}
     </div>
-    <div style="display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:11.5px;color:var(--muted);">
-      <span>⚠️</span><span>הבר מציג את ממוצע השינוי היחסי בסקטור. ירוק=עלייה, אדום=ירידה. נגזר מנתוני Finnhub ואזכורי Reddit — לא ייעוץ השקעות.</span>
-    </div>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:12px;">⚠️ נתוני ETF מ-Alpha Vantage. הגרף מציג חצי שנה אחרונה. לא ייעוץ השקעות.</p>
   </div>`;
 }
 
-function toggle(ticker){
-  expandedTicker = expandedTicker===ticker ? null : ticker;
-  renderBody();
-}
-function setDetailTab(ticker,tab){
-  detailTab[ticker]=tab;
-  renderBody();
-}
-
+function toggle(t){expandedTicker=expandedTicker===t?null:t;renderBody();}
+function setDetailTab(t,tab){detailTab[t]=tab;renderBody();}
+function setRange(t,n){chartRange[t]=n;renderBody();}
 load();
 </script>
 </body>
