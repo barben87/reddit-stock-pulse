@@ -33,9 +33,9 @@ APIFY_ACTOR = "automation-lab~reddit-scraper"  # ~ instead of / for the URL
 APIFY_BASE_URL = "https://api.apify.com/v2"
 
 # How much to pull per subreddit. Keep modest to stay well inside the free $5 credit.
-POSTS_PER_SUBREDDIT = 40
+POSTS_PER_SUBREDDIT = 30
 INCLUDE_COMMENTS = True
-MAX_COMMENTS_PER_POST = 30
+MAX_COMMENTS_PER_POST = 20
 TOP_TICKERS_FOR_FINNHUB = 40  # only fetch prices for the most-discussed N
 
 # Words that look like tickers but aren't — filtered out.
