@@ -144,7 +144,7 @@ def scrape_reddit(subreddits, valid_tickers, lookback_days=1):
 
     for sub in subreddits:
         log.info(f"Scraping r/{sub} (public JSON)...")
-        listing = _reddit_get(f"https://www.reddit.com/r/{sub}/hot.json?limit={POSTS_PER_SUBREDDIT}")
+        listing = _reddit_get(f"https://old.reddit.com/r/{sub}/hot.json?limit={POSTS_PER_SUBREDDIT}")
         time.sleep(REDDIT_DELAY)
         if not listing:
             log.warning(f"  Could not load r/{sub}, skipping")
@@ -170,7 +170,7 @@ def scrape_reddit(subreddits, valid_tickers, lookback_days=1):
             if READ_COMMENTS:
                 permalink = post.get('permalink')
                 if permalink:
-                    cjson = _reddit_get(f"https://www.reddit.com{permalink}.json?limit={COMMENTS_PER_POST}")
+                    cjson = _reddit_get(f"https://old.reddit.com{permalink}.json?limit={COMMENTS_PER_POST}")
                     time.sleep(REDDIT_DELAY)
                     if cjson and len(cjson) > 1:
                         comments = cjson[1].get('data', {}).get('children', [])
