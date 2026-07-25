@@ -147,16 +147,44 @@ def scrape_reddit_via_apify(subreddits, valid_tickers):
     }
 
     log.info(f"Starting Apify actor for {len(subreddits)} subreddits (last {LOOKBACK_HOURS}h)...")
-    run_url = f"{APIFY_BASE_URL}/acts/{APIFY_ACTOR}/runs?token={APIFY_TOKEN}&waitForFinish=300"
+    run_url = f"{APIFY_BASE_URL}/acts/{APIFY_ACTOR}/runs?token={APIFY_TOKEN}"
     try:
-        resp = requests.post(run_url, json=run_input, timeout=320)
+        resp = requests.post(run_url, json=run_input, timeout=60)
         resp.raise_for_status()
         run_data = resp.json().get('data', {})
     except Exception as e:
-        log.error(f"Failed Apify run: {e}")
+        log.error(f"Failed to start Apify run: {e}")
         return {}
 
-    log.info(f"Apify run status: {run_data.get('status')}")
+    run_id = run_data.get('id')
+    if not run_id:
+        log.error("No run ID returned from Apify")
+        return {}
+
+    # --- Poll until the run ACTUALLY finishes ---
+    # Statuses: READY (queued), RUNNING, SUCCEEDED, FAILED, ABORTED, TIMED-OUT.
+    # Reading the dataset before SUCCEEDED gives partial, inconsistent results.
+    status = run_data.get('status')
+    max_wait_seconds = 600
+    waited = 0
+    poll_every = 10
+    while status in ('READY', 'RUNNING') and waited < max_wait_seconds:
+        time.sleep(poll_every)
+        waited += poll_every
+        try:
+            st = requests.get(f"{APIFY_BASE_URL}/actor-runs/{run_id}?token={APIFY_TOKEN}", timeout=30)
+            st.raise_for_status()
+            run_data = st.json().get('data', {})
+            status = run_data.get('status')
+            log.info(f"  Apify status after {waited}s: {status}")
+        except Exception as e:
+            log.warning(f"  Status poll failed: {str(e)[:60]}")
+
+    log.info(f"Apify final status: {status} (waited {waited}s)")
+    if status != 'SUCCEEDED':
+        log.warning(f"⚠️  Run did not reach SUCCEEDED — data may be incomplete. Aborting to avoid corrupting the snapshot.")
+        return {}
+
     dataset_id = run_data.get('defaultDatasetId')
     named = run_data.get('namedDatasetIds') or {}
     if named.get('posts'):
@@ -388,18 +416,46 @@ def av_fetch_daily(symbol, budget_state):
 # 7-DAY HISTORY (snapshots)
 # ============================================================================
 def save_daily_snapshot(reddit_data):
+    """Save today's mention counts. If a snapshot for today already exists (e.g. the
+    workflow ran more than once), merge by taking the HIGHER count per ticker — a
+    partial/smaller run must never erase a fuller one."""
     os.makedirs(HISTORY_DIR, exist_ok=True)
     today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
-    snap = {t: d['mentions'] for t, d in reddit_data.items()}
-    with open(f"{HISTORY_DIR}/{today}.json", 'w') as f:
-        json.dump({'date': today, 'mentions': snap}, f)
-    log.info(f"Saved daily snapshot: {today}")
+    path = f"{HISTORY_DIR}/{today}.json"
+
+    new_counts = {t: d['mentions'] for t, d in reddit_data.items()}
+
+    existing = {}
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                existing = json.load(f).get('mentions', {})
+        except Exception:
+            existing = {}
+
+    if existing:
+        merged = dict(existing)
+        raised = 0
+        for t, m in new_counts.items():
+            if m > merged.get(t, 0):
+                merged[t] = m
+                raised += 1
+        log.info(f"Snapshot for {today} already existed — merged (kept max); {raised} tickers updated")
+    else:
+        merged = new_counts
+
+    with open(path, 'w') as f:
+        json.dump({'date': today, 'mentions': merged}, f)
+    log.info(f"Saved daily snapshot: {today} ({len(merged)} tickers)")
 
 def compute_7day_top():
+    """Sum mentions across the last 7 daily snapshots.
+    Returns (ranked_list, days_available) so the UI can show how much history exists."""
     if not os.path.isdir(HISTORY_DIR):
-        return []
+        return [], 0
     cutoff = datetime.now(timezone.utc) - timedelta(days=7)
     totals = defaultdict(int)
+    days_used = 0
     for fname in os.listdir(HISTORY_DIR):
         if not fname.endswith('.json'):
             continue
@@ -409,17 +465,38 @@ def compute_7day_top():
             continue
         if date < cutoff:
             continue
+        days_used += 1
         with open(f"{HISTORY_DIR}/{fname}") as f:
             snap = json.load(f)
         for t, m in snap.get('mentions', {}).items():
             totals[t] += m
     ranked = sorted(totals.items(), key=lambda kv: kv[1], reverse=True)
-    return [{'ticker': t, 'mentions7d': m} for t, m in ranked[:20]]
+    return [{'ticker': t, 'mentions7d': m} for t, m in ranked[:20]], days_used
+
+
+def cleanup_old_snapshots(keep_days=14):
+    """Delete snapshots older than keep_days so the repo stays small forever."""
+    if not os.path.isdir(HISTORY_DIR):
+        return
+    cutoff = datetime.now(timezone.utc) - timedelta(days=keep_days)
+    removed = 0
+    for fname in os.listdir(HISTORY_DIR):
+        if not fname.endswith('.json'):
+            continue
+        try:
+            date = datetime.strptime(fname[:-5], '%Y-%m-%d').replace(tzinfo=timezone.utc)
+        except Exception:
+            continue
+        if date < cutoff:
+            os.remove(f"{HISTORY_DIR}/{fname}")
+            removed += 1
+    if removed:
+        log.info(f"Cleaned up {removed} snapshots older than {keep_days} days")
 
 # ============================================================================
 # MERGE & SAVE
 # ============================================================================
-def build_output(reddit_data, quotes, av_metrics, sector_data, top7):
+def build_output(reddit_data, quotes, av_metrics, sector_data, top7, history_days=0):
     stocks = {}
     for ticker, rd in reddit_data.items():
         q = quotes.get(ticker)
@@ -450,6 +527,7 @@ def build_output(reddit_data, quotes, av_metrics, sector_data, top7):
             [{'ticker': t, 'mentions': d['mentions']} for t, d in reddit_data.items() if t in stocks],
             key=lambda x: x['mentions'], reverse=True)[:20],
         'top7Days': top7,
+        'historyDays': history_days,
         'updated_at': datetime.now(timezone.utc).isoformat(),
         'subreddits': SUBREDDITS,
     }
@@ -477,7 +555,11 @@ def main():
 
     # 2) Daily snapshot + 7-day rollup
     save_daily_snapshot(reddit_data)
-    top7 = compute_7day_top()
+    cleanup_old_snapshots(keep_days=14)
+    top7, history_days = compute_7day_top()
+    log.info(f"History: {history_days} day(s) of snapshots available")
+    if history_days <= 1:
+        log.info("  (7-day view will match today's numbers until more days accumulate)")
     log.info(f"7-day top: {', '.join(t['ticker'] for t in top7[:10])}")
 
     # 3) Finnhub quotes for ALL discussed tickers (cap to 50 to be safe)
@@ -520,7 +602,7 @@ def main():
     save_av_cache(budget_state['cache'])
 
     # 5) merge & save
-    build_output(reddit_data, quotes, av_metrics, sector_data, top7)
+    build_output(reddit_data, quotes, av_metrics, sector_data, top7, history_days)
 
     log.info("=" * 60)
     log.info("✅ DONE")
