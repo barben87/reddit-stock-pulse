@@ -41,11 +41,11 @@ APIFY_ACTOR = "automation-lab~reddit-scraper"
 APIFY_BASE_URL = "https://api.apify.com/v2"
 AV_BASE_URL = "https://www.alphavantage.co/query"
 
-# Reddit pull sizing (kept modest for Apify free credit)
-POSTS_PER_SUBREDDIT = 40
+# Reddit pull sizing (larger to catch big discussion threads where most mentions live)
+POSTS_PER_SUBREDDIT = 60
 INCLUDE_COMMENTS = True
-MAX_COMMENTS_PER_POST = 30
-LOOKBACK_HOURS = 24
+MAX_COMMENTS_PER_POST = 80
+LOOKBACK_HOURS = 48
 
 # Alpha Vantage budget (free tier: 25/day, 5/min)
 AV_DAILY_BUDGET = 25
@@ -175,6 +175,21 @@ def scrape_reddit_via_apify(subreddits, valid_tickers):
 
     log.info(f"Got {len(items)} items from Apify")
 
+    # Diagnostic: show the keys of the first post and first comment so we can
+    # verify field names (subreddit, createdAt, etc.) against reality.
+    if items:
+        first_post = next((it for it in items if it.get('type', 'post') == 'post'), None)
+        first_comment = next((it for it in items if it.get('type') == 'comment'), None)
+        if first_post:
+            log.info(f"  POST fields: {sorted(first_post.keys())}")
+            log.info(f"  POST subreddit sample: '{first_post.get('subreddit')}' | url: '{(first_post.get('permalink') or first_post.get('url') or '')[:60]}'")
+        if first_comment:
+            log.info(f"  COMMENT fields: {sorted(first_comment.keys())}")
+
+    n_posts = sum(1 for it in items if it.get('type', 'post') == 'post')
+    n_comments = len(items) - n_posts
+    log.info(f"  Breakdown: {n_posts} posts, {n_comments} comments")
+
     cutoff = datetime.now(timezone.utc) - timedelta(hours=LOOKBACK_HOURS)
     results = defaultdict(lambda: {'mentions':0,'bullish':0,'bearish':0,'neutral':0,'subreddits':defaultdict(int)})
 
@@ -193,18 +208,41 @@ def scrape_reddit_via_apify(subreddits, valid_tickers):
         if item.get('type', 'post') == 'post' and created and created < cutoff:
             continue
         kept += 1
-        sub = item.get('subreddit', '')
+
+        # --- Robust subreddit attribution ---
+        # Apify items may expose the subreddit under different keys, or only in a URL/permalink.
+        sub = (item.get('subreddit') or item.get('subredditName')
+               or item.get('community') or '')
+        if not sub:
+            link = item.get('permalink') or item.get('url') or item.get('postUrl') or ''
+            m = re.search(r'/r/([A-Za-z0-9_]+)', link)
+            if m:
+                sub = m.group(1)
+        # Normalize to our canonical subreddit names (case-insensitive match)
+        if sub:
+            for canonical in SUBREDDITS:
+                if sub.lower() == canonical.lower():
+                    sub = canonical
+                    break
+
         if item.get('type', 'post') == 'post':
             text = f"{item.get('title','')} {item.get('selfText','')}"
         else:
             text = item.get('body', '')
         if not text.strip():
             continue
+
         sentiment = classify_sentiment(text)
-        for t in set(extract_tickers(text, valid_tickers)):
-            results[t]['mentions'] += 1
+        tickers_in_text = extract_tickers(text, valid_tickers)
+        if not tickers_in_text:
+            continue
+        # Count each distinct ticker once per item, but weight posts a bit higher
+        # than comments (a post mentioning a ticker is a stronger signal than one comment).
+        weight = 2 if item.get('type', 'post') == 'post' else 1
+        for t in set(tickers_in_text):
+            results[t]['mentions'] += weight
             if sub:
-                results[t]['subreddits'][sub] += 1
+                results[t]['subreddits'][sub] += weight
             results[t][sentiment] += 1
 
     log.info(f"Kept {kept} items within {LOOKBACK_HOURS}h window")
