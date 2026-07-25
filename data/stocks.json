@@ -21,18 +21,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 164,
-        "bullish": 82,
-        "bearish": 27,
-        "neutral": 54,
+        "mentions": 228,
+        "bullish": 114,
+        "bearish": 38,
+        "neutral": 76,
         "subreddits": {
-          "stocks": 45,
-          "investing": 42,
-          "wallstreetbets": 44,
-          "ValueInvesting": 44
+          "stocks": 66,
+          "investing": 64,
+          "wallstreetbets": 67,
+          "ValueInvesting": 65
         }
       },
-      "reddit_mentions": 164
+      "reddit_mentions": 228
     },
     "TSLA": {
       "price": 313.03,
@@ -55,18 +55,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 148,
-        "bullish": 74,
-        "bearish": 24,
-        "neutral": 49,
+        "mentions": 154,
+        "bullish": 77,
+        "bearish": 25,
+        "neutral": 51,
         "subreddits": {
-          "stocks": 45,
-          "investing": 45,
-          "wallstreetbets": 50,
-          "ValueInvesting": 40
+          "stocks": 42,
+          "investing": 57,
+          "wallstreetbets": 48,
+          "ValueInvesting": 51
         }
       },
-      "reddit_mentions": 148
+      "reddit_mentions": 154
     },
     "AAPL": {
       "price": 333.02,
@@ -89,18 +89,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 155,
-        "bullish": 77,
-        "bearish": 25,
-        "neutral": 51,
+        "mentions": 162,
+        "bullish": 81,
+        "bearish": 27,
+        "neutral": 54,
         "subreddits": {
-          "stocks": 41,
-          "investing": 56,
-          "wallstreetbets": 50,
-          "ValueInvesting": 54
+          "stocks": 50,
+          "investing": 57,
+          "wallstreetbets": 51,
+          "ValueInvesting": 49
         }
       },
-      "reddit_mentions": 155
+      "reddit_mentions": 162
     },
     "MSFT": {
       "price": 381.7,
@@ -123,18 +123,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 222,
-        "bullish": 111,
-        "bearish": 37,
-        "neutral": 74,
+        "mentions": 140,
+        "bullish": 70,
+        "bearish": 23,
+        "neutral": 46,
         "subreddits": {
-          "stocks": 62,
-          "investing": 58,
-          "wallstreetbets": 58,
-          "ValueInvesting": 70
+          "stocks": 41,
+          "investing": 48,
+          "wallstreetbets": 38,
+          "ValueInvesting": 37
         }
       },
-      "reddit_mentions": 222
+      "reddit_mentions": 140
     },
     "AMD": {
       "price": 521.95,
@@ -162,10 +162,10 @@
         "bearish": 35,
         "neutral": 70,
         "subreddits": {
-          "stocks": 53,
-          "investing": 68,
-          "wallstreetbets": 71,
-          "ValueInvesting": 55
+          "stocks": 65,
+          "investing": 71,
+          "wallstreetbets": 72,
+          "ValueInvesting": 69
         }
       },
       "reddit_mentions": 212
@@ -191,18 +191,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 116,
-        "bullish": 58,
-        "bearish": 19,
-        "neutral": 38,
+        "mentions": 65,
+        "bullish": 32,
+        "bearish": 10,
+        "neutral": 21,
         "subreddits": {
-          "stocks": 31,
-          "investing": 29,
-          "wallstreetbets": 34,
-          "ValueInvesting": 46
+          "stocks": 20,
+          "investing": 32,
+          "wallstreetbets": 18,
+          "ValueInvesting": 24
         }
       },
-      "reddit_mentions": 116
+      "reddit_mentions": 65
     },
     "SOFI": {
       "price": 16.46,
@@ -225,18 +225,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 246,
-        "bullish": 123,
-        "bearish": 41,
-        "neutral": 82,
+        "mentions": 236,
+        "bullish": 118,
+        "bearish": 39,
+        "neutral": 78,
         "subreddits": {
-          "stocks": 78,
-          "investing": 72,
-          "wallstreetbets": 67,
-          "ValueInvesting": 73
+          "stocks": 65,
+          "investing": 60,
+          "wallstreetbets": 65,
+          "ValueInvesting": 62
         }
       },
-      "reddit_mentions": 246
+      "reddit_mentions": 236
     },
     "GME": {
       "price": 21.17,
@@ -259,18 +259,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 197,
-        "bullish": 98,
-        "bearish": 32,
-        "neutral": 65,
+        "mentions": 149,
+        "bullish": 74,
+        "bearish": 24,
+        "neutral": 49,
         "subreddits": {
-          "stocks": 55,
-          "investing": 51,
-          "wallstreetbets": 65,
-          "ValueInvesting": 59
+          "stocks": 49,
+          "investing": 50,
+          "wallstreetbets": 53,
+          "ValueInvesting": 53
         }
       },
-      "reddit_mentions": 197
+      "reddit_mentions": 149
     },
     "META": {
       "price": 595.19,
@@ -293,18 +293,18 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 140,
-        "bullish": 70,
-        "bearish": 23,
-        "neutral": 46,
+        "mentions": 65,
+        "bullish": 32,
+        "bearish": 10,
+        "neutral": 21,
         "subreddits": {
-          "stocks": 52,
-          "investing": 43,
-          "wallstreetbets": 52,
-          "ValueInvesting": 45
+          "stocks": 32,
+          "investing": 27,
+          "wallstreetbets": 16,
+          "ValueInvesting": 28
         }
       },
-      "reddit_mentions": 140
+      "reddit_mentions": 65
     },
     "COIN": {
       "price": 158.29,
@@ -327,69 +327,69 @@
         "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 222,
-        "bullish": 111,
-        "bearish": 37,
-        "neutral": 74,
+        "mentions": 242,
+        "bullish": 121,
+        "bearish": 40,
+        "neutral": 80,
         "subreddits": {
-          "stocks": 69,
-          "investing": 71,
-          "wallstreetbets": 71,
-          "ValueInvesting": 63
+          "stocks": 75,
+          "investing": 74,
+          "wallstreetbets": 68,
+          "ValueInvesting": 77
         }
       },
-      "reddit_mentions": 222
+      "reddit_mentions": 242
     }
   },
   "sectors": {
     "Semiconductors": {
-      "avgWeekChange": -2.7,
+      "avgWeekChange": -2.35,
       "tickers": [
         "AMD",
         "NVDA"
       ],
-      "totalMentions": 376
+      "totalMentions": 440
     },
     "Automobiles": {
       "avgWeekChange": -2.4,
       "tickers": [
         "TSLA"
       ],
-      "totalMentions": 148
+      "totalMentions": 154
     },
     "Technology": {
-      "avgWeekChange": 0.05,
+      "avgWeekChange": 0.7,
       "tickers": [
         "AAPL",
         "MSFT",
         "PLTR"
       ],
-      "totalMentions": 493
+      "totalMentions": 367
     },
     "Financial Services": {
-      "avgWeekChange": -1.64,
+      "avgWeekChange": -1.65,
       "tickers": [
         "COIN",
         "SOFI"
       ],
-      "totalMentions": 468
+      "totalMentions": 478
     },
     "Retail": {
       "avgWeekChange": -0.89,
       "tickers": [
         "GME"
       ],
-      "totalMentions": 197
+      "totalMentions": 149
     },
     "Media": {
       "avgWeekChange": -1.67,
       "tickers": [
         "META"
       ],
-      "totalMentions": 140
+      "totalMentions": 65
     }
   },
-  "updated_at": "2026-07-25T07:37:54.610144Z",
+  "updated_at": "2026-07-25T07:55:26.918298Z",
   "subreddits": [
     "stocks",
     "investing",
