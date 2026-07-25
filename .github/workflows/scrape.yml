@@ -32,6 +32,7 @@ jobs:
       - name: Run scraper
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: python reddit_stock_pulse.py
       
       - name: Commit changes
