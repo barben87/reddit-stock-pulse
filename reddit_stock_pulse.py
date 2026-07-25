@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Reddit Stock Pulse — Reddit scraping via Apify (works from GitHub!) + Finnhub stock data.
-Designed to run in GitHub Actions twice daily.
+Reddit Stock Pulse v2
+  - Reddit via Apify (last 24h)
+  - Finnhub: current price + daily change for ALL discussed tickers (free, 60/min)
+  - Alpha Vantage: full history -> chart series + MA20/50/150/200 for top tickers & sector ETFs (free, 25/day)
+  - Daily snapshots -> "most discussed in last 7 days"
+Runs in GitHub Actions once daily.
 """
 
 import os
@@ -9,7 +13,7 @@ import json
 import re
 import random
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 import logging
 
@@ -23,30 +27,55 @@ log = logging.getLogger(__name__)
 # ============================================================================
 FINNHUB_API_KEY = os.environ.get('FINNHUB_API_KEY')
 APIFY_TOKEN = os.environ.get('APIFY_TOKEN')
+ALPHAVANTAGE_API_KEY = os.environ.get('ALPHAVANTAGE_API_KEY')
 
 SUBREDDITS = ['stocks', 'investing', 'wallstreetbets', 'ValueInvesting']
+
 DATA_FILE = 'data/stocks.json'
 TICKER_CACHE_FILE = 'data/ticker_cache.json'
+HISTORY_DIR = 'data/history'          # daily snapshots for the 7-day view
+AV_CACHE_FILE = 'data/av_cache.json'  # cached Alpha Vantage series (avoid re-fetching)
 
 FINNHUB_BASE_URL = "https://finnhub.io/api/v1"
-APIFY_ACTOR = "automation-lab~reddit-scraper"  # ~ instead of / for the URL
+APIFY_ACTOR = "automation-lab~reddit-scraper"
 APIFY_BASE_URL = "https://api.apify.com/v2"
+AV_BASE_URL = "https://www.alphavantage.co/query"
 
-# How much to pull per subreddit. Keep modest to stay well inside the free $5 credit.
-POSTS_PER_SUBREDDIT = 30
+# Reddit pull sizing (kept modest for Apify free credit)
+POSTS_PER_SUBREDDIT = 40
 INCLUDE_COMMENTS = True
-MAX_COMMENTS_PER_POST = 20
-TOP_TICKERS_FOR_FINNHUB = 40  # only fetch prices for the most-discussed N
+MAX_COMMENTS_PER_POST = 30
+LOOKBACK_HOURS = 24
 
-# Words that look like tickers but aren't — filtered out.
+# Alpha Vantage budget (free tier: 25/day, 5/min)
+AV_DAILY_BUDGET = 25
+AV_TOP_STOCKS = 14     # how many top stocks get a full chart+MA each day
+AV_CACHE_TTL_DAYS = 3         # reuse a symbol's AV series for this many days
+AV_MIN_DELAY = 13             # seconds between AV calls (5/min -> 12s min; 13 for safety)
+
+# Sector ETFs (the 11 SPDR sector ETFs + a couple extras). name -> ETF ticker
+SECTOR_ETFS = {
+    "Technology": "XLK",
+    "Financials": "XLF",
+    "Health Care": "XLV",
+    "Energy": "XLE",
+    "Consumer Discretionary": "XLY",
+    "Consumer Staples": "XLP",
+    "Industrials": "XLI",
+    "Materials": "XLB",
+    "Utilities": "XLU",
+    "Real Estate": "XLRE",
+    "Communication Services": "XLC",
+}
+
 STOPWORDS = {
-    'A', 'I', 'IT', 'IS', 'BE', 'TO', 'DO', 'GO', 'ON', 'IN', 'AT', 'OR', 'AN', 'AS', 'IF', 'SO', 'UP', 'MY', 'BY', 'WE', 'HE',
-    'CEO', 'CFO', 'IPO', 'ETF', 'USA', 'US', 'UK', 'EU', 'DD', 'YOLO', 'FD', 'FOMO', 'ATH', 'ATL', 'EPS', 'PE', 'PT', 'YTD',
-    'AI', 'ML', 'EV', 'PC', 'TV', 'OK', 'LOL', 'IMO', 'IMHO', 'TLDR', 'EDIT', 'FYI', 'ELI', 'AKA', 'NSFW', 'WSB', 'THE',
-    'AND', 'FOR', 'ARE', 'BUT', 'NOT', 'YOU', 'ALL', 'CAN', 'HAS', 'HAD', 'WAS', 'ONE', 'OUR', 'OUT', 'DAY', 'GET', 'NEW',
-    'NOW', 'OLD', 'SEE', 'HIM', 'TWO', 'HOW', 'ITS', 'WHO', 'DID', 'YES', 'HIS', 'HER', 'BIG', 'BUY', 'LOW', 'RED',
-    'CALL', 'PUTS', 'CALLS', 'GAIN', 'LOSS', 'HODL', 'MOON', 'BEAR', 'BULL', 'LONG', 'RISK', 'CASH', 'FEAR', 'HIGH', 'OPEN',
-    'WILL', 'JUST', 'LIKE', 'WITH', 'THIS', 'THAT', 'FROM', 'HAVE', 'MORE', 'THAN', 'WHAT', 'WHEN', 'YOUR', 'THEY',
+    'A','I','IT','IS','BE','TO','DO','GO','ON','IN','AT','OR','AN','AS','IF','SO','UP','MY','BY','WE','HE',
+    'CEO','CFO','IPO','ETF','USA','US','UK','EU','DD','YOLO','FD','FOMO','ATH','ATL','EPS','PE','PT','YTD',
+    'AI','ML','EV','PC','TV','OK','LOL','IMO','IMHO','TLDR','EDIT','FYI','ELI','AKA','NSFW','WSB','THE',
+    'AND','FOR','ARE','BUT','NOT','YOU','ALL','CAN','HAS','HAD','WAS','ONE','OUR','OUT','DAY','GET','NEW',
+    'NOW','OLD','SEE','HIM','TWO','HOW','ITS','WHO','DID','YES','HIS','HER','BIG','BUY','LOW','RED',
+    'CALL','PUTS','CALLS','GAIN','LOSS','HODL','MOON','BEAR','BULL','LONG','RISK','CASH','FEAR','HIGH','OPEN',
+    'WILL','JUST','LIKE','WITH','THIS','THAT','FROM','HAVE','MORE','THAN','WHAT','WHEN','YOUR','THEY',
 }
 
 # ============================================================================
@@ -55,12 +84,10 @@ STOPWORDS = {
 def load_valid_tickers():
     cache_file = TICKER_CACHE_FILE
     if os.path.exists(cache_file):
-        mod_time = os.path.getmtime(cache_file)
-        if datetime.now().timestamp() - mod_time < 7 * 86400:
+        if datetime.now().timestamp() - os.path.getmtime(cache_file) < 7 * 86400:
             log.info(f"Using cached ticker list from {cache_file}")
             with open(cache_file) as f:
                 return set(json.load(f))
-
     log.info("Fetching fresh ticker list from GitHub...")
     try:
         import urllib.request
@@ -74,45 +101,37 @@ def load_valid_tickers():
         return tickers
     except Exception as e:
         log.warning(f"Failed to fetch tickers: {e}. Using fallback.")
-        return {t.upper() for t in ['NVDA', 'TSLA', 'AAPL', 'MSFT', 'AMZN', 'META', 'GOOGL', 'AMD', 'PLTR', 'SOFI']}
+        return {t.upper() for t in ['NVDA','TSLA','AAPL','MSFT','AMZN','META','GOOGL','AMD','PLTR','SOFI']}
 
 # ============================================================================
-# TEXT ANALYSIS HELPERS
+# TEXT ANALYSIS
 # ============================================================================
 def extract_tickers(text, valid_tickers):
     if not text:
         return []
     found = []
-    # $TICKER form (high confidence)
     for m in re.finditer(r'\$([A-Za-z]{1,5})\b', text):
         t = m.group(1).upper()
         if t in valid_tickers and t not in STOPWORDS:
             found.append(t)
-    # bare UPPERCASE word form (needs stopword filtering)
     for m in re.finditer(r'\b([A-Z]{2,5})\b', text):
         t = m.group(1)
         if t in valid_tickers and t not in STOPWORDS:
             found.append(t)
     return found
 
-
 def classify_sentiment(text):
-    bullish = {'bull', 'buy', 'rocket', 'moon', 'calls', 'long', 'gain', 'green', 'squeeze', 'undervalued'}
-    bearish = {'bear', 'sell', 'puts', 'short', 'crash', 'dump', 'overvalued', 'drop'}
+    bullish = {'bull','buy','rocket','moon','calls','long','gain','green','squeeze','undervalued'}
+    bearish = {'bear','sell','puts','short','crash','dump','overvalued','drop'}
     tl = (text or '').lower()
     b = sum(1 for w in bullish if w in tl)
     s = sum(1 for w in bearish if w in tl)
-    if b > s:
-        return 'bullish'
-    if s > b:
-        return 'bearish'
-    return 'neutral'
+    return 'bullish' if b > s else 'bearish' if s > b else 'neutral'
 
 # ============================================================================
-# REDDIT via APIFY
+# REDDIT via APIFY (last 24h)
 # ============================================================================
 def scrape_reddit_via_apify(subreddits, valid_tickers):
-    """Run the Apify Reddit actor and process its dataset output."""
     if not APIFY_TOKEN:
         log.error("❌ APIFY_TOKEN not set!")
         return {}
@@ -121,223 +140,347 @@ def scrape_reddit_via_apify(subreddits, valid_tickers):
     run_input = {
         "urls": urls,
         "maxPostsPerSource": POSTS_PER_SUBREDDIT,
-        "sort": "hot",
+        "sort": "new",  # 'new' so we can filter by recency (last 24h)
         "includeComments": INCLUDE_COMMENTS,
         "maxCommentsPerPost": MAX_COMMENTS_PER_POST,
         "commentDepth": 2,
     }
 
-    log.info(f"Starting Apify actor for {len(subreddits)} subreddits...")
-
-    # Start the actor run and wait for it to finish (waitForFinish in seconds)
+    log.info(f"Starting Apify actor for {len(subreddits)} subreddits (last {LOOKBACK_HOURS}h)...")
     run_url = f"{APIFY_BASE_URL}/acts/{APIFY_ACTOR}/runs?token={APIFY_TOKEN}&waitForFinish=300"
     try:
         resp = requests.post(run_url, json=run_input, timeout=320)
         resp.raise_for_status()
         run_data = resp.json().get('data', {})
     except Exception as e:
-        log.error(f"Failed to start/finish Apify run: {e}")
+        log.error(f"Failed Apify run: {e}")
         return {}
 
-    status = run_data.get('status')
-    log.info(f"Apify run status: {status}")
-
-    # Find the dataset ID that holds the results
+    log.info(f"Apify run status: {run_data.get('status')}")
     dataset_id = run_data.get('defaultDatasetId')
     named = run_data.get('namedDatasetIds') or {}
     if named.get('posts'):
         dataset_id = named['posts']
-
     if not dataset_id:
-        log.error("No dataset ID returned from Apify run")
+        log.error("No dataset ID from Apify")
         return {}
 
-    # Fetch dataset items
-    items_url = f"{APIFY_BASE_URL}/datasets/{dataset_id}/items?token={APIFY_TOKEN}&format=json"
     try:
-        items_resp = requests.get(items_url, timeout=60)
-        items_resp.raise_for_status()
-        items = items_resp.json()
+        items = requests.get(
+            f"{APIFY_BASE_URL}/datasets/{dataset_id}/items?token={APIFY_TOKEN}&format=json",
+            timeout=60).json()
     except Exception as e:
         log.error(f"Failed to fetch Apify dataset: {e}")
         return {}
 
-    log.info(f"Got {len(items)} items from Apify (posts + comments)")
+    log.info(f"Got {len(items)} items from Apify")
 
-    # Process items into ticker counts
-    results = defaultdict(lambda: {'mentions': 0, 'bullish': 0, 'bearish': 0, 'neutral': 0, 'subreddits': defaultdict(int)})
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=LOOKBACK_HOURS)
+    results = defaultdict(lambda: {'mentions':0,'bullish':0,'bearish':0,'neutral':0,'subreddits':defaultdict(int)})
 
-    def record(ticker, sub, sentiment):
-        results[ticker]['mentions'] += 1
-        if sub:
-            results[ticker]['subreddits'][sub] += 1
-        results[ticker][sentiment] += 1
+    def parse_dt(s):
+        if not s:
+            return None
+        try:
+            return datetime.fromisoformat(s.replace('Z', '+00:00'))
+        except Exception:
+            return None
 
+    kept = 0
     for item in items:
-        itype = item.get('type', 'post')
+        created = parse_dt(item.get('createdAt'))
+        # Only enforce recency on posts; comments inherit their post's thread
+        if item.get('type', 'post') == 'post' and created and created < cutoff:
+            continue
+        kept += 1
         sub = item.get('subreddit', '')
-
-        if itype == 'post':
-            text = f"{item.get('title', '')} {item.get('selfText', '')}"
-        else:  # comment
+        if item.get('type', 'post') == 'post':
+            text = f"{item.get('title','')} {item.get('selfText','')}"
+        else:
             text = item.get('body', '')
-
         if not text.strip():
             continue
-
         sentiment = classify_sentiment(text)
         for t in set(extract_tickers(text, valid_tickers)):
-            record(t, sub, sentiment)
+            results[t]['mentions'] += 1
+            if sub:
+                results[t]['subreddits'][sub] += 1
+            results[t][sentiment] += 1
 
+    log.info(f"Kept {kept} items within {LOOKBACK_HOURS}h window")
     return {k: {
-        'mentions': v['mentions'],
-        'bullish': v['bullish'],
-        'bearish': v['bearish'],
-        'neutral': v['neutral'],
-        'subreddits': dict(v['subreddits']),
+        'mentions': v['mentions'], 'bullish': v['bullish'], 'bearish': v['bearish'],
+        'neutral': v['neutral'], 'subreddits': dict(v['subreddits']),
     } for k, v in results.items()}
 
 # ============================================================================
-# FINNHUB
+# FINNHUB — current price + day change (for everyone)
 # ============================================================================
-def generate_mock_stock_data(ticker):
-    random.seed(hash(ticker))
-    price = 50 + random.random() * 300
-    return {
-        'price': float(round(price, 2)),
-        'dayChange': (random.random() - 0.45) * 5,
-        'weekChange': (random.random() - 0.4) * 10,
-        'monthChange': (random.random() - 0.35) * 20,
-        'sixMonthChange': (random.random() - 0.3) * 50,
-        'technicals': {'ma20': None, 'ma50': None, 'ma150': None, 'ma200': None, 'rsi': None},
-        'fundamentals': {'marketCap': 'N/A', 'pe': 'N/A', 'revenue': 'N/A',
-                         'sector': 'Unknown', 'industry': 'Unknown'},
-    }
-
-
-def fetch_stock_data(tickers):
-    if not FINNHUB_API_KEY:
-        log.error("❌ FINNHUB_API_KEY not set! Using mock data.")
-        return {t: generate_mock_stock_data(t) for t in tickers}
-
-    log.info(f"Fetching stock data for {len(tickers)} tickers from Finnhub...")
+def fetch_finnhub_quotes(tickers):
     results = {}
-    success = 0
+    if not FINNHUB_API_KEY:
+        log.error("❌ FINNHUB_API_KEY not set!")
+        return {t: None for t in tickers}
+    log.info(f"Finnhub: fetching quotes for {len(tickers)} tickers...")
     for idx, ticker in enumerate(tickers):
         try:
             if idx > 0:
                 time.sleep(1)
-            log.info(f"  → {ticker}...")
             quote = requests.get(f"{FINNHUB_BASE_URL}/quote",
                                  params={'symbol': ticker, 'token': FINNHUB_API_KEY}, timeout=10).json()
             profile = requests.get(f"{FINNHUB_BASE_URL}/stock/profile2",
                                    params={'symbol': ticker, 'token': FINNHUB_API_KEY}, timeout=10).json()
             price = quote.get('c', 0)
             if not price:
-                results[ticker] = generate_mock_stock_data(ticker)
+                results[ticker] = None
                 continue
-            day_change = quote.get('dp', 0)
-            open_price = quote.get('o', price)
             results[ticker] = {
                 'price': float(round(price, 2)),
-                'dayChange': float(round(day_change, 2)),
-                'weekChange': float(round((price - open_price) / open_price * 100 if open_price else 0, 2)),
-                'monthChange': float(round(day_change * 0.7, 2)),
-                'sixMonthChange': float(round(day_change * 2, 2)),
-                'technicals': {'ma20': None, 'ma50': None, 'ma150': None, 'ma200': None, 'rsi': None},
+                'dayChange': float(round(quote.get('dp', 0), 2)),
                 'fundamentals': {
                     'marketCap': profile.get('marketCapitalization', 'N/A'),
                     'pe': float(round(profile.get('pe', 0), 2)) if profile.get('pe') else 'N/A',
-                    'revenue': profile.get('ttmRevenue', 'N/A'),
                     'sector': profile.get('finnhubIndustry', 'Unknown'),
-                    'industry': profile.get('industry', 'Unknown'),
+                    'industry': profile.get('finnhubIndustry', 'Unknown'),
                 },
             }
-            log.info(f"  ✓ {ticker}: ${price} ({day_change:+.1f}%)")
-            success += 1
         except Exception as e:
-            log.warning(f"  ⚠️  {ticker} failed: {str(e)[:60]} — mock")
-            results[ticker] = generate_mock_stock_data(ticker)
-
-    log.info(f"Stock data: {success} real, {len(results) - success} mock")
+            log.warning(f"  Finnhub {ticker} failed: {str(e)[:50]}")
+            results[ticker] = None
+    ok = sum(1 for v in results.values() if v)
+    log.info(f"Finnhub: {ok}/{len(tickers)} quotes OK")
     return results
 
 # ============================================================================
-# AGGREGATE & SAVE
+# ALPHA VANTAGE — full daily history -> chart + moving averages
 # ============================================================================
-def compute_sector_rollup(stocks):
-    sectors = defaultdict(lambda: {'stocks': [], 'mentions': 0, 'weighted_change': 0})
-    for ticker, data in stocks.items():
-        sector = data.get('fundamentals', {}).get('sector', 'Unknown')
-        if sector in ('Unknown', '', None):
+def load_av_cache():
+    if os.path.exists(AV_CACHE_FILE):
+        try:
+            with open(AV_CACHE_FILE) as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def save_av_cache(cache):
+    os.makedirs(os.path.dirname(AV_CACHE_FILE), exist_ok=True)
+    with open(AV_CACHE_FILE, 'w') as f:
+        json.dump(cache, f)
+
+def _sma(values, window):
+    if len(values) < window:
+        return None
+    return round(sum(values[-window:]) / window, 2)
+
+def _pct(a, b):
+    return round((b - a) / a * 100, 2) if a else 0
+
+def compute_series_metrics(closes):
+    """closes = list of daily closes, OLD->NEW. Returns chart points + MAs + period changes."""
+    if not closes:
+        return None
+    last = closes[-1]
+    def change_days(n):
+        if len(closes) > n:
+            return _pct(closes[-n-1], last)
+        return _pct(closes[0], last)
+    # sample the chart (keep it light): last 180 trading days
+    series = closes[-180:]
+    return {
+        'series': [round(c, 2) for c in series],
+        'ma20': _sma(closes, 20),
+        'ma50': _sma(closes, 50),
+        'ma150': _sma(closes, 150),
+        'ma200': _sma(closes, 200),
+        'weekChange': change_days(5),
+        'monthChange': change_days(21),
+        'sixMonthChange': change_days(126),
+    }
+
+def av_fetch_daily(symbol, budget_state):
+    """Fetch full daily history from Alpha Vantage, respecting the daily budget + cache."""
+    cache = budget_state['cache']
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+
+    # Use cache if fresh enough
+    entry = cache.get(symbol)
+    if entry:
+        age_days = (datetime.now(timezone.utc) - datetime.fromisoformat(entry['fetched'])).days
+        if age_days < AV_CACHE_TTL_DAYS:
+            return entry['metrics']
+
+    # Budget check
+    if budget_state['used'] >= AV_DAILY_BUDGET:
+        return entry['metrics'] if entry else None  # fall back to stale cache if any
+
+    try:
+        if budget_state['used'] > 0:
+            time.sleep(AV_MIN_DELAY)
+        log.info(f"  AV: fetching {symbol} ({budget_state['used']+1}/{AV_DAILY_BUDGET})...")
+        r = requests.get(AV_BASE_URL, params={
+            'function': 'TIME_SERIES_DAILY',
+            'symbol': symbol,
+            'outputsize': 'full',
+            'apikey': ALPHAVANTAGE_API_KEY,
+        }, timeout=30)
+        budget_state['used'] += 1
+        data = r.json()
+
+        ts = data.get('Time Series (Daily)')
+        if not ts:
+            note = data.get('Note') or data.get('Information') or data.get('Error Message') or 'no data'
+            log.warning(f"  AV {symbol}: {str(note)[:80]}")
+            return entry['metrics'] if entry else None
+
+        # sort OLD -> NEW
+        dates = sorted(ts.keys())
+        closes = [float(ts[d]['4. close']) for d in dates]
+        metrics = compute_series_metrics(closes)
+
+        cache[symbol] = {'fetched': datetime.now(timezone.utc).isoformat(), 'metrics': metrics}
+        return metrics
+    except Exception as e:
+        log.warning(f"  AV {symbol} error: {str(e)[:60]}")
+        return entry['metrics'] if entry else None
+
+# ============================================================================
+# 7-DAY HISTORY (snapshots)
+# ============================================================================
+def save_daily_snapshot(reddit_data):
+    os.makedirs(HISTORY_DIR, exist_ok=True)
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    snap = {t: d['mentions'] for t, d in reddit_data.items()}
+    with open(f"{HISTORY_DIR}/{today}.json", 'w') as f:
+        json.dump({'date': today, 'mentions': snap}, f)
+    log.info(f"Saved daily snapshot: {today}")
+
+def compute_7day_top():
+    if not os.path.isdir(HISTORY_DIR):
+        return []
+    cutoff = datetime.now(timezone.utc) - timedelta(days=7)
+    totals = defaultdict(int)
+    for fname in os.listdir(HISTORY_DIR):
+        if not fname.endswith('.json'):
             continue
-        mentions = data.get('reddit_mentions', 0)
-        sectors[sector]['stocks'].append(ticker)
-        sectors[sector]['mentions'] += mentions
-        sectors[sector]['weighted_change'] += data.get('weekChange', 0) * mentions
-    result = {}
-    for sector, d in sectors.items():
-        if d['mentions'] > 0:
-            result[sector] = {
-                'avgWeekChange': float(round(d['weighted_change'] / d['mentions'], 2)),
-                'tickers': sorted(d['stocks']),
-                'totalMentions': d['mentions'],
-            }
-    return result
+        try:
+            date = datetime.strptime(fname[:-5], '%Y-%m-%d').replace(tzinfo=timezone.utc)
+        except Exception:
+            continue
+        if date < cutoff:
+            continue
+        with open(f"{HISTORY_DIR}/{fname}") as f:
+            snap = json.load(f)
+        for t, m in snap.get('mentions', {}).items():
+            totals[t] += m
+    ranked = sorted(totals.items(), key=lambda kv: kv[1], reverse=True)
+    return [{'ticker': t, 'mentions7d': m} for t, m in ranked[:20]]
 
-
-def save_data(reddit_data, stock_data):
+# ============================================================================
+# MERGE & SAVE
+# ============================================================================
+def build_output(reddit_data, quotes, av_metrics, sector_data, top7):
     stocks = {}
-    for ticker, reddit_mentions in reddit_data.items():
-        if ticker not in stock_data:
+    for ticker, rd in reddit_data.items():
+        q = quotes.get(ticker)
+        if not q:
             continue
+        av = av_metrics.get(ticker, {}) or {}
         stocks[ticker] = {
-            **stock_data[ticker],
-            'reddit': reddit_mentions,
-            'reddit_mentions': reddit_mentions['mentions'],
+            'price': q['price'],
+            'dayChange': q['dayChange'],
+            'weekChange': av.get('weekChange'),
+            'monthChange': av.get('monthChange'),
+            'sixMonthChange': av.get('sixMonthChange'),
+            'series': av.get('series'),
+            'technicals': {
+                'ma20': av.get('ma20'), 'ma50': av.get('ma50'),
+                'ma150': av.get('ma150'), 'ma200': av.get('ma200'),
+            },
+            'fundamentals': q['fundamentals'],
+            'reddit': rd,
+            'reddit_mentions': rd['mentions'],
         }
-    sectors = compute_sector_rollup(stocks)
+
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     output = {
         'stocks': stocks,
-        'sectors': sectors,
-        'updated_at': datetime.utcnow().isoformat() + 'Z',
+        'sectors': sector_data,
+        'topToday': sorted(
+            [{'ticker': t, 'mentions': d['mentions']} for t, d in reddit_data.items() if t in stocks],
+            key=lambda x: x['mentions'], reverse=True)[:20],
+        'top7Days': top7,
+        'updated_at': datetime.now(timezone.utc).isoformat(),
         'subreddits': SUBREDDITS,
     }
     with open(DATA_FILE, 'w') as f:
         json.dump(output, f, indent=2, default=str)
-    log.info(f"Saved {len(stocks)} stocks to {DATA_FILE}")
-    return output
+    log.info(f"Saved {len(stocks)} stocks + {len(sector_data)} sectors to {DATA_FILE}")
 
 # ============================================================================
 # MAIN
 # ============================================================================
 def main():
     log.info("=" * 60)
-    log.info("STOCK PULSE — Apify (Reddit) + Finnhub (stocks)")
+    log.info("STOCK PULSE v2 — Apify + Finnhub + Alpha Vantage")
     log.info("=" * 60)
 
-    log.info("Loading valid ticker list...")
     valid_tickers = load_valid_tickers()
     log.info(f"Loaded {len(valid_tickers)} valid tickers")
 
-    log.info("Scraping Reddit via Apify...")
+    # 1) Reddit (last 24h)
     reddit_data = scrape_reddit_via_apify(SUBREDDITS, valid_tickers)
-    log.info(f"Found {len(reddit_data)} unique tickers mentioned")
-
+    log.info(f"Found {len(reddit_data)} unique tickers")
     if not reddit_data:
-        log.warning("No tickers found — check Apify token/run.")
+        log.warning("No tickers found — stopping.")
         return
 
-    # Keep top-N by mentions for Finnhub
-    top = dict(sorted(reddit_data.items(), key=lambda kv: kv[1]['mentions'], reverse=True)[:TOP_TICKERS_FOR_FINNHUB])
-    log.info(f"Top tickers: {', '.join(list(top.keys())[:15])}...")
+    # 2) Daily snapshot + 7-day rollup
+    save_daily_snapshot(reddit_data)
+    top7 = compute_7day_top()
+    log.info(f"7-day top: {', '.join(t['ticker'] for t in top7[:10])}")
 
-    log.info("Fetching stock data from Finnhub...")
-    stock_data = fetch_stock_data(list(top.keys()))
+    # 3) Finnhub quotes for ALL discussed tickers (cap to 50 to be safe)
+    discussed = [t for t, _ in sorted(reddit_data.items(), key=lambda kv: kv[1]['mentions'], reverse=True)][:50]
+    quotes = fetch_finnhub_quotes(discussed)
 
-    log.info("Merging and saving...")
-    save_data(top, stock_data)
+    # 4) Alpha Vantage — budget-limited: sector ETFs first, then top stocks
+    budget_state = {'used': 0, 'cache': load_av_cache()}
+    av_metrics = {}
+
+    # 4a) sector ETFs (trend)
+    sector_data = {}
+    if ALPHAVANTAGE_API_KEY:
+        log.info("Alpha Vantage: sector ETFs...")
+        for sector_name, etf in SECTOR_ETFS.items():
+            m = av_fetch_daily(etf, budget_state)
+            if m:
+                sector_data[sector_name] = {
+                    'etf': etf,
+                    'price': m['series'][-1] if m.get('series') else None,
+                    'weekChange': m.get('weekChange'),
+                    'monthChange': m.get('monthChange'),
+                    'sixMonthChange': m.get('sixMonthChange'),
+                    'series': m.get('series'),
+                }
+    else:
+        log.warning("ALPHAVANTAGE_API_KEY not set — skipping charts & ETF trends")
+
+    # 4b) top discussed stocks get full chart + MA (whatever budget remains)
+    if ALPHAVANTAGE_API_KEY:
+        log.info("Alpha Vantage: top discussed stocks...")
+        for ticker in discussed[:AV_TOP_STOCKS]:
+            if budget_state['used'] >= AV_DAILY_BUDGET:
+                log.info("  AV daily budget reached — remaining stocks use Finnhub-only.")
+                break
+            m = av_fetch_daily(ticker, budget_state)
+            if m:
+                av_metrics[ticker] = m
+
+    save_av_cache(budget_state['cache'])
+
+    # 5) merge & save
+    build_output(reddit_data, quotes, av_metrics, sector_data, top7)
 
     log.info("=" * 60)
     log.info("✅ DONE")
