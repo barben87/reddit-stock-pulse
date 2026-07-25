@@ -40,7 +40,7 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@github.com"
           git config --global user.name "GitHub Actions"
-          git add data/stocks.json data/ticker_cache.json
+          git add data/
           git commit -m "Update stock data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || echo "No changes to commit"
       
       - name: Push changes
