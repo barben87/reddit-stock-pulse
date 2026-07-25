@@ -1,11 +1,11 @@
 {
   "stocks": {
     "NVDA": {
-      "price": 177.89,
-      "dayChange": -2.1973760208852737,
-      "weekChange": -2.069385132106575,
-      "monthChange": -0.8372350743420287,
-      "sixMonthChange": 25.31041024592947,
+      "price": 206.84,
+      "dayChange": -0.92,
+      "weekChange": -0.29,
+      "monthChange": -0.64,
+      "sixMonthChange": -1.84,
       "technicals": {
         "ma20": null,
         "ma50": null,
@@ -14,66 +14,32 @@
         "rsi": null
       },
       "fundamentals": {
-        "marketCap": "N/A",
-        "pe": 52.81,
-        "revenue": "N/A",
-        "sector": "Consumer",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 174,
-        "bullish": 87,
-        "bearish": 29,
-        "neutral": 58,
-        "subreddits": {
-          "stocks": 58,
-          "investing": 48,
-          "wallstreetbets": 57,
-          "ValueInvesting": 50
-        }
-      },
-      "reddit_mentions": 174
-    },
-    "TSLA": {
-      "price": 86.29,
-      "dayChange": 0.5177010975750431,
-      "weekChange": 5.000802816520271,
-      "monthChange": 8.478109906767026,
-      "sixMonthChange": -4.250256221092028,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "221B",
+        "marketCap": 5005527.868287625,
         "pe": "N/A",
         "revenue": "N/A",
-        "sector": "Healthcare",
-        "industry": "Information Technology"
+        "sector": "Semiconductors",
+        "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 227,
-        "bullish": 113,
-        "bearish": 37,
-        "neutral": 75,
+        "mentions": 164,
+        "bullish": 82,
+        "bearish": 27,
+        "neutral": 54,
         "subreddits": {
-          "stocks": 62,
-          "investing": 65,
-          "wallstreetbets": 57,
-          "ValueInvesting": 71
+          "stocks": 45,
+          "investing": 42,
+          "wallstreetbets": 44,
+          "ValueInvesting": 44
         }
       },
-      "reddit_mentions": 227
+      "reddit_mentions": 164
     },
-    "AAPL": {
-      "price": 216.78,
-      "dayChange": -2.236947452369357,
-      "weekChange": -3.91160873406329,
-      "monthChange": -5.281222414176439,
-      "sixMonthChange": -14.863005246770857,
+    "TSLA": {
+      "price": 313.03,
+      "dayChange": -2.08,
+      "weekChange": -2.4,
+      "monthChange": -1.46,
+      "sixMonthChange": -4.17,
       "technicals": {
         "ma20": null,
         "ma50": null,
@@ -82,32 +48,66 @@
         "rsi": null
       },
       "fundamentals": {
-        "marketCap": "661B",
+        "marketCap": 1175654.1777574501,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Automobiles",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 148,
+        "bullish": 74,
+        "bearish": 24,
+        "neutral": 49,
+        "subreddits": {
+          "stocks": 45,
+          "investing": 45,
+          "wallstreetbets": 50,
+          "ValueInvesting": 40
+        }
+      },
+      "reddit_mentions": 148
+    },
+    "AAPL": {
+      "price": 333.02,
+      "dayChange": 3.53,
+      "weekChange": 3.49,
+      "monthChange": 2.47,
+      "sixMonthChange": 7.06,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 4891183.499104327,
         "pe": "N/A",
         "revenue": "N/A",
         "sector": "Technology",
-        "industry": "Information Technology"
+        "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 69,
-        "bullish": 34,
-        "bearish": 11,
-        "neutral": 23,
+        "mentions": 155,
+        "bullish": 77,
+        "bearish": 25,
+        "neutral": 51,
         "subreddits": {
-          "stocks": 29,
-          "investing": 26,
-          "wallstreetbets": 25,
-          "ValueInvesting": 17
+          "stocks": 41,
+          "investing": 56,
+          "wallstreetbets": 50,
+          "ValueInvesting": 54
         }
       },
-      "reddit_mentions": 69
+      "reddit_mentions": 155
     },
     "MSFT": {
-      "price": 60.25,
-      "dayChange": -0.5038502827203186,
-      "weekChange": 0.09859218120487179,
-      "monthChange": 2.6101348564388793,
-      "sixMonthChange": 3.940761431581616,
+      "price": 381.7,
+      "dayChange": 0.03,
+      "weekChange": -1.38,
+      "monthChange": 0.02,
+      "sixMonthChange": 0.06,
       "technicals": {
         "ma20": null,
         "ma50": null,
@@ -116,11 +116,45 @@
         "rsi": null
       },
       "fundamentals": {
-        "marketCap": "N/A",
-        "pe": 22.07,
+        "marketCap": 2835433.375710069,
+        "pe": "N/A",
         "revenue": "N/A",
-        "sector": "Healthcare",
-        "industry": "Information Technology"
+        "sector": "Technology",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 222,
+        "bullish": 111,
+        "bearish": 37,
+        "neutral": 74,
+        "subreddits": {
+          "stocks": 62,
+          "investing": 58,
+          "wallstreetbets": 58,
+          "ValueInvesting": 70
+        }
+      },
+      "reddit_mentions": 222
+    },
+    "AMD": {
+      "price": 521.95,
+      "dayChange": -3.29,
+      "weekChange": -4.57,
+      "monthChange": -2.3,
+      "sixMonthChange": -6.57,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 851091.9796805977,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Semiconductors",
+        "industry": "Unknown"
       },
       "reddit": {
         "mentions": 212,
@@ -129,53 +163,19 @@
         "neutral": 70,
         "subreddits": {
           "stocks": 53,
-          "investing": 67,
-          "wallstreetbets": 57,
-          "ValueInvesting": 59
+          "investing": 68,
+          "wallstreetbets": 71,
+          "ValueInvesting": 55
         }
       },
       "reddit_mentions": 212
     },
-    "AMD": {
-      "price": 119.75,
-      "dayChange": -1.3219544835542727,
-      "weekChange": -3.4045440461926333,
-      "monthChange": 12.852455814046944,
-      "sixMonthChange": -11.018825411471807,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "852B",
-        "pe": 40.7,
-        "revenue": "N/A",
-        "sector": "Healthcare",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 243,
-        "bullish": 121,
-        "bearish": 40,
-        "neutral": 81,
-        "subreddits": {
-          "stocks": 64,
-          "investing": 69,
-          "wallstreetbets": 64,
-          "ValueInvesting": 68
-        }
-      },
-      "reddit_mentions": 243
-    },
     "PLTR": {
-      "price": 218.87,
-      "dayChange": 1.196029929433334,
-      "weekChange": 5.845136540645479,
-      "monthChange": 0.5838128887500527,
-      "sixMonthChange": 8.219319307372084,
+      "price": 122.92,
+      "dayChange": -0.36,
+      "weekChange": -1.79,
+      "monthChange": -0.26,
+      "sixMonthChange": -0.73,
       "technicals": {
         "ma20": null,
         "ma50": null,
@@ -184,206 +184,212 @@
         "rsi": null
       },
       "fundamentals": {
-        "marketCap": "N/A",
-        "pe": 63.47,
-        "revenue": "N/A",
-        "sector": "Consumer",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 103,
-        "bullish": 51,
-        "bearish": 17,
-        "neutral": 34,
-        "subreddits": {
-          "stocks": 42,
-          "investing": 39,
-          "wallstreetbets": 29,
-          "ValueInvesting": 43
-        }
-      },
-      "reddit_mentions": 103
-    },
-    "SOFI": {
-      "price": 193.36,
-      "dayChange": 2.480573865716165,
-      "weekChange": 5.7024066768939505,
-      "monthChange": 7.403881286668577,
-      "sixMonthChange": 17.19192015637038,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "N/A",
-        "pe": 41.36,
-        "revenue": "N/A",
-        "sector": "Finance",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 176,
-        "bullish": 88,
-        "bearish": 29,
-        "neutral": 58,
-        "subreddits": {
-          "stocks": 45,
-          "investing": 51,
-          "wallstreetbets": 62,
-          "ValueInvesting": 62
-        }
-      },
-      "reddit_mentions": 176
-    },
-    "GME": {
-      "price": 95.55,
-      "dayChange": 2.1482542772790705,
-      "weekChange": -0.5332249085124596,
-      "monthChange": 8.07702244928005,
-      "sixMonthChange": -8.928689612796639,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "N/A",
+        "marketCap": 294677.63313190493,
         "pe": "N/A",
         "revenue": "N/A",
-        "sector": "Finance",
-        "industry": "Information Technology"
+        "sector": "Technology",
+        "industry": "Unknown"
       },
       "reddit": {
-        "mentions": 121,
-        "bullish": 60,
-        "bearish": 20,
-        "neutral": 40,
-        "subreddits": {
-          "stocks": 35,
-          "investing": 44,
-          "wallstreetbets": 33,
-          "ValueInvesting": 36
-        }
-      },
-      "reddit_mentions": 121
-    },
-    "META": {
-      "price": 287.09,
-      "dayChange": 0.9293316269827758,
-      "weekChange": 1.6879066553067001,
-      "monthChange": 5.926962827141833,
-      "sixMonthChange": -5.7266266603111875,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "360B",
-        "pe": 26.43,
-        "revenue": "N/A",
-        "sector": "Energy",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 81,
-        "bullish": 40,
-        "bearish": 13,
-        "neutral": 27,
-        "subreddits": {
-          "stocks": 27,
-          "investing": 36,
-          "wallstreetbets": 20,
-          "ValueInvesting": 25
-        }
-      },
-      "reddit_mentions": 81
-    },
-    "COIN": {
-      "price": 318.57,
-      "dayChange": -1.8162926016687289,
-      "weekChange": 2.0098044864707343,
-      "monthChange": 4.926880959137723,
-      "sixMonthChange": -11.218410989875863,
-      "technicals": {
-        "ma20": null,
-        "ma50": null,
-        "ma150": null,
-        "ma200": null,
-        "rsi": null
-      },
-      "fundamentals": {
-        "marketCap": "N/A",
-        "pe": 34.77,
-        "revenue": "N/A",
-        "sector": "Consumer",
-        "industry": "Information Technology"
-      },
-      "reddit": {
-        "mentions": 117,
+        "mentions": 116,
         "bullish": 58,
         "bearish": 19,
-        "neutral": 39,
+        "neutral": 38,
         "subreddits": {
-          "stocks": 36,
-          "investing": 31,
-          "wallstreetbets": 36,
-          "ValueInvesting": 34
+          "stocks": 31,
+          "investing": 29,
+          "wallstreetbets": 34,
+          "ValueInvesting": 46
         }
       },
-      "reddit_mentions": 117
+      "reddit_mentions": 116
+    },
+    "SOFI": {
+      "price": 16.46,
+      "dayChange": -1.14,
+      "weekChange": -1.56,
+      "monthChange": -0.8,
+      "sixMonthChange": -2.28,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 21113.919848503305,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Financial Services",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 246,
+        "bullish": 123,
+        "bearish": 41,
+        "neutral": 82,
+        "subreddits": {
+          "stocks": 78,
+          "investing": 72,
+          "wallstreetbets": 67,
+          "ValueInvesting": 73
+        }
+      },
+      "reddit_mentions": 246
+    },
+    "GME": {
+      "price": 21.17,
+      "dayChange": -0.84,
+      "weekChange": -0.89,
+      "monthChange": -0.59,
+      "sixMonthChange": -1.69,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 9498.794009896486,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Retail",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 197,
+        "bullish": 98,
+        "bearish": 32,
+        "neutral": 65,
+        "subreddits": {
+          "stocks": 55,
+          "investing": 51,
+          "wallstreetbets": 65,
+          "ValueInvesting": 59
+        }
+      },
+      "reddit_mentions": 197
+    },
+    "META": {
+      "price": 595.19,
+      "dayChange": -1.8,
+      "weekChange": -1.67,
+      "monthChange": -1.26,
+      "sixMonthChange": -3.6,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 1510843.9995991755,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Media",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 140,
+        "bullish": 70,
+        "bearish": 23,
+        "neutral": 46,
+        "subreddits": {
+          "stocks": 52,
+          "investing": 43,
+          "wallstreetbets": 52,
+          "ValueInvesting": 45
+        }
+      },
+      "reddit_mentions": 140
+    },
+    "COIN": {
+      "price": 158.29,
+      "dayChange": -1.78,
+      "weekChange": -1.73,
+      "monthChange": -1.25,
+      "sixMonthChange": -3.56,
+      "technicals": {
+        "ma20": null,
+        "ma50": null,
+        "ma150": null,
+        "ma200": null,
+        "rsi": null
+      },
+      "fundamentals": {
+        "marketCap": 41703.24169,
+        "pe": "N/A",
+        "revenue": "N/A",
+        "sector": "Financial Services",
+        "industry": "Unknown"
+      },
+      "reddit": {
+        "mentions": 222,
+        "bullish": 111,
+        "bearish": 37,
+        "neutral": 74,
+        "subreddits": {
+          "stocks": 69,
+          "investing": 71,
+          "wallstreetbets": 71,
+          "ValueInvesting": 63
+        }
+      },
+      "reddit_mentions": 222
     }
   },
   "sectors": {
-    "Consumer": {
-      "avgWeekChange": 1.21,
-      "tickers": [
-        "COIN",
-        "NVDA",
-        "PLTR"
-      ],
-      "totalMentions": 394
-    },
-    "Healthcare": {
-      "avgWeekChange": 0.48,
+    "Semiconductors": {
+      "avgWeekChange": -2.7,
       "tickers": [
         "AMD",
-        "MSFT",
+        "NVDA"
+      ],
+      "totalMentions": 376
+    },
+    "Automobiles": {
+      "avgWeekChange": -2.4,
+      "tickers": [
         "TSLA"
       ],
-      "totalMentions": 682
+      "totalMentions": 148
     },
     "Technology": {
-      "avgWeekChange": -3.91,
+      "avgWeekChange": 0.05,
       "tickers": [
-        "AAPL"
+        "AAPL",
+        "MSFT",
+        "PLTR"
       ],
-      "totalMentions": 69
+      "totalMentions": 493
     },
-    "Finance": {
-      "avgWeekChange": 3.16,
+    "Financial Services": {
+      "avgWeekChange": -1.64,
       "tickers": [
-        "GME",
+        "COIN",
         "SOFI"
       ],
-      "totalMentions": 297
+      "totalMentions": 468
     },
-    "Energy": {
-      "avgWeekChange": 1.69,
+    "Retail": {
+      "avgWeekChange": -0.89,
+      "tickers": [
+        "GME"
+      ],
+      "totalMentions": 197
+    },
+    "Media": {
+      "avgWeekChange": -1.67,
       "tickers": [
         "META"
       ],
-      "totalMentions": 81
+      "totalMentions": 140
     }
   },
-  "updated_at": "2026-07-25T07:30:34.131238Z",
+  "updated_at": "2026-07-25T07:37:54.610144Z",
   "subreddits": [
     "stocks",
     "investing",
