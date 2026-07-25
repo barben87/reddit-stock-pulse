@@ -3,7 +3,7 @@ name: Scrape Reddit Stocks
 on:
   schedule:
     # Run at 6:00 AM and 6:00 PM UTC (9:00 AM and 9:00 PM Israel time)
-    - cron: '0 6,18 * * *'
+    - cron: '0 6 * * *'
   
   # Allow manual trigger from GitHub Actions tab
   workflow_dispatch:
