@@ -315,25 +315,27 @@ def _pct(a, b):
     return round((b - a) / a * 100, 2) if a else 0
 
 def compute_series_metrics(closes):
-    """closes = list of daily closes, OLD->NEW. Returns chart points + MAs + period changes."""
+    """closes = list of daily closes, OLD->NEW. Returns chart points + MAs + period changes.
+    Note: free Alpha Vantage 'compact' gives ~100 trading days, so MA150/MA200 and true
+    6-month change may be unavailable — we return what the data supports and None otherwise."""
     if not closes:
         return None
     last = closes[-1]
     def change_days(n):
         if len(closes) > n:
             return _pct(closes[-n-1], last)
+        # not enough history for the exact window -> use the earliest point we have
         return _pct(closes[0], last)
-    # sample the chart (keep it light): last 180 trading days
     series = closes[-180:]
     return {
         'series': [round(c, 2) for c in series],
         'ma20': _sma(closes, 20),
         'ma50': _sma(closes, 50),
-        'ma150': _sma(closes, 150),
-        'ma200': _sma(closes, 200),
+        'ma150': _sma(closes, 150),   # None if <150 days available
+        'ma200': _sma(closes, 200),   # None if <200 days available
         'weekChange': change_days(5),
         'monthChange': change_days(21),
-        'sixMonthChange': change_days(126),
+        'sixMonthChange': change_days(min(126, len(closes) - 1)),  # ~100 days if compact
     }
 
 def av_fetch_daily(symbol, budget_state):
@@ -359,7 +361,7 @@ def av_fetch_daily(symbol, budget_state):
         r = requests.get(AV_BASE_URL, params={
             'function': 'TIME_SERIES_DAILY',
             'symbol': symbol,
-            'outputsize': 'full',
+            'outputsize': 'compact',  # 'full' is premium-only; compact = last ~100 trading days (enough for 6mo)
             'apikey': ALPHAVANTAGE_API_KEY,
         }, timeout=30)
         budget_state['used'] += 1
