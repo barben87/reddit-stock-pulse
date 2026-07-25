@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Reddit Stock Pulse — Scrape Reddit via PUBLIC JSON endpoints (no API key / no PRAW)
-+ fetch real stock data from Finnhub.
+Reddit Stock Pulse — Reddit scraping via Apify (works from GitHub!) + Finnhub stock data.
 Designed to run in GitHub Actions twice daily.
 """
 
@@ -23,25 +22,23 @@ log = logging.getLogger(__name__)
 # CONFIG
 # ============================================================================
 FINNHUB_API_KEY = os.environ.get('FINNHUB_API_KEY')
+APIFY_TOKEN = os.environ.get('APIFY_TOKEN')
 
 SUBREDDITS = ['stocks', 'investing', 'wallstreetbets', 'ValueInvesting']
 DATA_FILE = 'data/stocks.json'
 TICKER_CACHE_FILE = 'data/ticker_cache.json'
+
 FINNHUB_BASE_URL = "https://finnhub.io/api/v1"
+APIFY_ACTOR = "automation-lab~reddit-scraper"  # ~ instead of / for the URL
+APIFY_BASE_URL = "https://api.apify.com/v2"
 
-# A clear, honest User-Agent is required by Reddit or requests get blocked.
-# Change the username to your own Reddit handle.
-REDDIT_USER_AGENT = "StockPulse/1.0 (personal research project; contact: barben87)"
-
-# How many posts per subreddit to pull, and whether to also read comments.
+# How much to pull per subreddit. Keep modest to stay well inside the free $5 credit.
 POSTS_PER_SUBREDDIT = 40
-READ_COMMENTS = True
-COMMENTS_PER_POST = 60  # cap so we don't hammer Reddit
+INCLUDE_COMMENTS = True
+MAX_COMMENTS_PER_POST = 30
+TOP_TICKERS_FOR_FINNHUB = 40  # only fetch prices for the most-discussed N
 
-# Delay between Reddit requests (seconds) — keeps us polite and unblocked.
-REDDIT_DELAY = 2.5
-
-# Words that look like tickers but almost never are — filtered out.
+# Words that look like tickers but aren't — filtered out.
 STOPWORDS = {
     'A', 'I', 'IT', 'IS', 'BE', 'TO', 'DO', 'GO', 'ON', 'IN', 'AT', 'OR', 'AN', 'AS', 'IF', 'SO', 'UP', 'MY', 'BY', 'WE', 'HE',
     'CEO', 'CFO', 'IPO', 'ETF', 'USA', 'US', 'UK', 'EU', 'DD', 'YOLO', 'FD', 'FOMO', 'ATH', 'ATL', 'EPS', 'PE', 'PT', 'YTD',
@@ -49,13 +46,13 @@ STOPWORDS = {
     'AND', 'FOR', 'ARE', 'BUT', 'NOT', 'YOU', 'ALL', 'CAN', 'HAS', 'HAD', 'WAS', 'ONE', 'OUR', 'OUT', 'DAY', 'GET', 'NEW',
     'NOW', 'OLD', 'SEE', 'HIM', 'TWO', 'HOW', 'ITS', 'WHO', 'DID', 'YES', 'HIS', 'HER', 'BIG', 'BUY', 'LOW', 'RED',
     'CALL', 'PUTS', 'CALLS', 'GAIN', 'LOSS', 'HODL', 'MOON', 'BEAR', 'BULL', 'LONG', 'RISK', 'CASH', 'FEAR', 'HIGH', 'OPEN',
+    'WILL', 'JUST', 'LIKE', 'WITH', 'THIS', 'THAT', 'FROM', 'HAVE', 'MORE', 'THAN', 'WHAT', 'WHEN', 'YOUR', 'THEY',
 }
 
 # ============================================================================
 # TICKER LIST
 # ============================================================================
 def load_valid_tickers():
-    """Load list of all valid US stock tickers from GitHub (cached locally)"""
     cache_file = TICKER_CACHE_FILE
     if os.path.exists(cache_file):
         mod_time = os.path.getmtime(cache_file)
@@ -76,42 +73,22 @@ def load_valid_tickers():
         log.info(f"Cached {len(tickers)} tickers")
         return tickers
     except Exception as e:
-        log.warning(f"Failed to fetch tickers: {e}. Using fallback list.")
+        log.warning(f"Failed to fetch tickers: {e}. Using fallback.")
         return {t.upper() for t in ['NVDA', 'TSLA', 'AAPL', 'MSFT', 'AMZN', 'META', 'GOOGL', 'AMD', 'PLTR', 'SOFI']}
 
 # ============================================================================
-# REDDIT: Public JSON scraping (no API key needed)
+# TEXT ANALYSIS HELPERS
 # ============================================================================
-def _reddit_get(url):
-    """GET a Reddit .json URL politely, with retries on rate limit."""
-    headers = {'User-Agent': REDDIT_USER_AGENT}
-    for attempt in range(3):
-        try:
-            resp = requests.get(url, headers=headers, timeout=15)
-            if resp.status_code == 429:
-                wait = 10 * (attempt + 1)
-                log.warning(f"    Rate limited (429), waiting {wait}s...")
-                time.sleep(wait)
-                continue
-            resp.raise_for_status()
-            return resp.json()
-        except Exception as e:
-            log.warning(f"    Request failed ({str(e)[:60]}), attempt {attempt + 1}/3")
-            time.sleep(5)
-    return None
-
-
-def _extract_tickers(text, valid_tickers):
-    """Return a list of valid tickers found in a piece of text."""
+def extract_tickers(text, valid_tickers):
     if not text:
         return []
     found = []
-    # 1) $TICKER form — highest confidence
+    # $TICKER form (high confidence)
     for m in re.finditer(r'\$([A-Za-z]{1,5})\b', text):
         t = m.group(1).upper()
         if t in valid_tickers and t not in STOPWORDS:
             found.append(t)
-    # 2) bare UPPERCASE word form — needs stopword filtering
+    # bare UPPERCASE word form (needs stopword filtering)
     for m in re.finditer(r'\b([A-Z]{2,5})\b', text):
         t = m.group(1)
         if t in valid_tickers and t not in STOPWORDS:
@@ -119,10 +96,10 @@ def _extract_tickers(text, valid_tickers):
     return found
 
 
-def _classify_sentiment(text):
-    bullish = {'bull', 'buy', 'rocket', 'moon', 'calls', 'long', 'up', 'gain', 'green', 'squeeze', 'undervalued'}
-    bearish = {'bear', 'sell', 'puts', 'short', 'down', 'crash', 'dump', 'red', 'overvalued', 'drop'}
-    tl = text.lower()
+def classify_sentiment(text):
+    bullish = {'bull', 'buy', 'rocket', 'moon', 'calls', 'long', 'gain', 'green', 'squeeze', 'undervalued'}
+    bearish = {'bear', 'sell', 'puts', 'short', 'crash', 'dump', 'overvalued', 'drop'}
+    tl = (text or '').lower()
     b = sum(1 for w in bullish if w in tl)
     s = sum(1 for w in bearish if w in tl)
     if b > s:
@@ -131,56 +108,86 @@ def _classify_sentiment(text):
         return 'bearish'
     return 'neutral'
 
+# ============================================================================
+# REDDIT via APIFY
+# ============================================================================
+def scrape_reddit_via_apify(subreddits, valid_tickers):
+    """Run the Apify Reddit actor and process its dataset output."""
+    if not APIFY_TOKEN:
+        log.error("❌ APIFY_TOKEN not set!")
+        return {}
 
-def scrape_reddit(subreddits, valid_tickers, lookback_days=1):
-    """Scrape mentions + sentiment from Reddit public JSON (posts and comments)."""
+    urls = [f"https://www.reddit.com/r/{sub}/" for sub in subreddits]
+    run_input = {
+        "urls": urls,
+        "maxPostsPerSource": POSTS_PER_SUBREDDIT,
+        "sort": "hot",
+        "includeComments": INCLUDE_COMMENTS,
+        "maxCommentsPerPost": MAX_COMMENTS_PER_POST,
+        "commentDepth": 2,
+    }
+
+    log.info(f"Starting Apify actor for {len(subreddits)} subreddits...")
+
+    # Start the actor run and wait for it to finish (waitForFinish in seconds)
+    run_url = f"{APIFY_BASE_URL}/acts/{APIFY_ACTOR}/runs?token={APIFY_TOKEN}&waitForFinish=300"
+    try:
+        resp = requests.post(run_url, json=run_input, timeout=320)
+        resp.raise_for_status()
+        run_data = resp.json().get('data', {})
+    except Exception as e:
+        log.error(f"Failed to start/finish Apify run: {e}")
+        return {}
+
+    status = run_data.get('status')
+    log.info(f"Apify run status: {status}")
+
+    # Find the dataset ID that holds the results
+    dataset_id = run_data.get('defaultDatasetId')
+    named = run_data.get('namedDatasetIds') or {}
+    if named.get('posts'):
+        dataset_id = named['posts']
+
+    if not dataset_id:
+        log.error("No dataset ID returned from Apify run")
+        return {}
+
+    # Fetch dataset items
+    items_url = f"{APIFY_BASE_URL}/datasets/{dataset_id}/items?token={APIFY_TOKEN}&format=json"
+    try:
+        items_resp = requests.get(items_url, timeout=60)
+        items_resp.raise_for_status()
+        items = items_resp.json()
+    except Exception as e:
+        log.error(f"Failed to fetch Apify dataset: {e}")
+        return {}
+
+    log.info(f"Got {len(items)} items from Apify (posts + comments)")
+
+    # Process items into ticker counts
     results = defaultdict(lambda: {'mentions': 0, 'bullish': 0, 'bearish': 0, 'neutral': 0, 'subreddits': defaultdict(int)})
-    cutoff_time = datetime.now().timestamp() - (lookback_days * 86400)
 
     def record(ticker, sub, sentiment):
         results[ticker]['mentions'] += 1
-        results[ticker]['subreddits'][sub] += 1
+        if sub:
+            results[ticker]['subreddits'][sub] += 1
         results[ticker][sentiment] += 1
 
-    for sub in subreddits:
-        log.info(f"Scraping r/{sub} (public JSON)...")
-        listing = _reddit_get(f"https://old.reddit.com/r/{sub}/hot.json?limit={POSTS_PER_SUBREDDIT}")
-        time.sleep(REDDIT_DELAY)
-        if not listing:
-            log.warning(f"  Could not load r/{sub}, skipping")
+    for item in items:
+        itype = item.get('type', 'post')
+        sub = item.get('subreddit', '')
+
+        if itype == 'post':
+            text = f"{item.get('title', '')} {item.get('selfText', '')}"
+        else:  # comment
+            text = item.get('body', '')
+
+        if not text.strip():
             continue
 
-        posts = listing.get('data', {}).get('children', [])
-        log.info(f"  Got {len(posts)} posts")
-
-        for child in posts:
-            post = child.get('data', {})
-            if post.get('created_utc', 0) < cutoff_time:
-                continue
-
-            title = post.get('title', '')
-            body = post.get('selftext', '')
-            post_text = f"{title} {body}"
-            sentiment = _classify_sentiment(post_text)
-
-            for t in set(_extract_tickers(post_text, valid_tickers)):
-                record(t, sub, sentiment)
-
-            # Read comments for this post
-            if READ_COMMENTS:
-                permalink = post.get('permalink')
-                if permalink:
-                    cjson = _reddit_get(f"https://old.reddit.com{permalink}.json?limit={COMMENTS_PER_POST}")
-                    time.sleep(REDDIT_DELAY)
-                    if cjson and len(cjson) > 1:
-                        comments = cjson[1].get('data', {}).get('children', [])
-                        for c in comments:
-                            cbody = c.get('data', {}).get('body', '')
-                            if not cbody:
-                                continue
-                            csent = _classify_sentiment(cbody)
-                            for t in set(_extract_tickers(cbody, valid_tickers)):
-                                record(t, sub, csent)
+        sentiment = classify_sentiment(text)
+        for t in set(extract_tickers(text, valid_tickers)):
+            record(t, sub, sentiment)
 
     return {k: {
         'mentions': v['mentions'],
@@ -191,7 +198,7 @@ def scrape_reddit(subreddits, valid_tickers, lookback_days=1):
     } for k, v in results.items()}
 
 # ============================================================================
-# FINNHUB: Real stock data
+# FINNHUB
 # ============================================================================
 def generate_mock_stock_data(ticker):
     random.seed(hash(ticker))
@@ -203,11 +210,8 @@ def generate_mock_stock_data(ticker):
         'monthChange': (random.random() - 0.35) * 20,
         'sixMonthChange': (random.random() - 0.3) * 50,
         'technicals': {'ma20': None, 'ma50': None, 'ma150': None, 'ma200': None, 'rsi': None},
-        'fundamentals': {
-            'marketCap': 'N/A', 'pe': 'N/A', 'revenue': 'N/A',
-            'sector': random.choice(['Technology', 'Healthcare', 'Finance', 'Energy', 'Consumer']),
-            'industry': 'Information Technology',
-        },
+        'fundamentals': {'marketCap': 'N/A', 'pe': 'N/A', 'revenue': 'N/A',
+                         'sector': 'Unknown', 'industry': 'Unknown'},
     }
 
 
@@ -228,12 +232,10 @@ def fetch_stock_data(tickers):
                                  params={'symbol': ticker, 'token': FINNHUB_API_KEY}, timeout=10).json()
             profile = requests.get(f"{FINNHUB_BASE_URL}/stock/profile2",
                                    params={'symbol': ticker, 'token': FINNHUB_API_KEY}, timeout=10).json()
-
             price = quote.get('c', 0)
             if not price:
                 results[ticker] = generate_mock_stock_data(ticker)
                 continue
-
             day_change = quote.get('dp', 0)
             open_price = quote.get('o', price)
             results[ticker] = {
@@ -312,24 +314,26 @@ def save_data(reddit_data, stock_data):
 # ============================================================================
 def main():
     log.info("=" * 60)
-    log.info("STOCK PULSE — Reddit public JSON + Finnhub")
+    log.info("STOCK PULSE — Apify (Reddit) + Finnhub (stocks)")
     log.info("=" * 60)
 
     log.info("Loading valid ticker list...")
     valid_tickers = load_valid_tickers()
     log.info(f"Loaded {len(valid_tickers)} valid tickers")
 
-    log.info("Scraping Reddit (public JSON)...")
-    reddit_data = scrape_reddit(SUBREDDITS, valid_tickers, lookback_days=1)
+    log.info("Scraping Reddit via Apify...")
+    reddit_data = scrape_reddit_via_apify(SUBREDDITS, valid_tickers)
     log.info(f"Found {len(reddit_data)} unique tickers mentioned")
 
     if not reddit_data:
-        log.warning("No tickers found — Reddit may be blocking, or no matches today.")
+        log.warning("No tickers found — check Apify token/run.")
         return
 
-    # Sort by mentions, keep the top 40 to stay within Finnhub free limits
-    top = dict(sorted(reddit_data.items(), key=lambda kv: kv[1]['mentions'], reverse=True)[:40])
-    log.info(f"Fetching stock data for top {len(top)} tickers...")
+    # Keep top-N by mentions for Finnhub
+    top = dict(sorted(reddit_data.items(), key=lambda kv: kv[1]['mentions'], reverse=True)[:TOP_TICKERS_FOR_FINNHUB])
+    log.info(f"Top tickers: {', '.join(list(top.keys())[:15])}...")
+
+    log.info("Fetching stock data from Finnhub...")
     stock_data = fetch_stock_data(list(top.keys()))
 
     log.info("Merging and saving...")
